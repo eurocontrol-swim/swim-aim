@@ -1,0 +1,21 @@
+name: swim-aim
+dependencies:
+- python
+- pytest
+- pytest-cov
+- Flask
+- Flask-SQLAlchemy
+- SQLAlchemy
+- Werkzeug
+- pyproj
+- lxml
+- pyOpenSSL
+- pip:
+  - gunicorn
+  - connexion[swagger-ui]
+  - marshmallow
+  - marshmallow-sqlalchemy
+  - flask-migrate
+  - psycopg2-binary
+  - geojson
+  - zeep
