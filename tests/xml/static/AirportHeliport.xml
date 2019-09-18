@@ -1,0 +1,46 @@
+<?xml version='1.0' encoding='UTF-8'?><adrmsg:ADRMessage xmlns:adrmsg="http://www.eurocontrol.int/cfmu/b2b/ADRMessage" xmlns:gml="http://www.opengis.net/gml/3.2" gml:id="ID_5052_1548813652630_1">
+    <adrmsg:hasMember>
+    <aixm:AirportHeliport xmlns:aixm="http://www.aixm.aero/schema/5.1" gml:id="ID_5052_1548813652630_2">
+        <gml:identifier codeSpace="urn:uuid:">2193b095-8bd7-40e4-ba10-2a5a3cf29901</gml:identifier>
+        <aixm:timeSlice>
+            <aixm:AirportHeliportTimeSlice gml:id="ID_5052_1548813652630_3">
+                <gml:validTime>
+                    <gml:TimePeriod gml:id="ID_5052_1548813652630_4">
+                        <gml:beginPosition>2013-11-14T00:00:00</gml:beginPosition>
+                        <gml:endPosition indeterminatePosition="unknown"/>
+                    </gml:TimePeriod>
+                </gml:validTime>
+                <aixm:interpretation>BASELINE</aixm:interpretation>
+                <aixm:featureLifetime>
+                    <gml:TimePeriod gml:id="ID_5052_1548813652630_5">
+                        <gml:beginPosition>2013-11-14T00:00:00</gml:beginPosition>
+                        <gml:endPosition indeterminatePosition="unknown"/>
+                    </gml:TimePeriod>
+                </aixm:featureLifetime>
+                <aixm:name>AUKI/GWAUNARU'U</aixm:name>
+                <aixm:locationIndicatorICAO>AGGA</aixm:locationIndicatorICAO>
+                <aixm:designatorIATA>AKS</aixm:designatorIATA>
+                <aixm:type>OTHER</aixm:type>
+                <aixm:controlType>CIVIL</aixm:controlType>
+                <aixm:servedCity>
+                    <aixm:City gml:id="ID_5052_1548813652630_6">
+                        <aixm:name>AUKI/GWAUNARU'U</aixm:name>
+                    </aixm:City>
+                </aixm:servedCity>
+                <aixm:ARP>
+                    <aixm:ElevatedPoint gml:id="ID_5052_1548813652630_7">
+                        <gml:pos srsName="urn:ogc:def:crs:EPSG::4326">-8.698333333333334 160.67833333333334</gml:pos>
+                        <aixm:elevation uom="FT">0</aixm:elevation>
+                    </aixm:ElevatedPoint>
+                </aixm:ARP>
+                <aixm:extension>
+                    <adrext:AirportHeliportExtension xmlns:adrext="http://www.aixm.aero/schema/5.1/extensions/EUR/ADR"
+                                                     gml:id="ID_5052_1548813652630_8">
+                        <adrext:defaultTaxiTime uom="MIN">10</adrext:defaultTaxiTime>
+                    </adrext:AirportHeliportExtension>
+                </aixm:extension>
+            </aixm:AirportHeliportTimeSlice>
+        </aixm:timeSlice>
+    </aixm:AirportHeliport>
+    </adrmsg:hasMember>
+</adrmsg:ADRMessage>
