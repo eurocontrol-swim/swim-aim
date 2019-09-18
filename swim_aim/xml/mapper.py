@@ -88,7 +88,7 @@ class Mapper(metaclass=MetaMapper):
         Map the provided XML element to the MapperField attributes of the class and returns a Mapper instance
 
         :param element: etree.Element
-        :param instance: Mapper, an existing instance can also be used to remap its MapperField attributes
+        :param instance: an existing Mapper instance can also be used to remap its MapperField attributes
         :return: Mapper
         """
         instance = instance or cls()

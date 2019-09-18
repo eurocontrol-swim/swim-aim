@@ -34,9 +34,17 @@ import pytest
 
 from swim_aim.xml.mapper import xml_map
 from swim_aim.xml_mappers import AirportHeliportMapper, DesignatedPointMapper, NavaidMapper, RouteMapper, \
-    RouteSegmentMapper
+    RouteSegmentMapper, remove_urn_uuid
 
 __author__ = "EUROCONTROL (SWIM)"
+
+
+@pytest.mark.parametrize('string, expected_string', [
+    ('urn:uuid:024bb6f8-3265-472a-9988-c765f519bcef', '024bb6f8-3265-472a-9988-c765f519bcef'),
+    ('024bb6f8-3265-472a-9988-c765f519bcef', '024bb6f8-3265-472a-9988-c765f519bcef')
+])
+def test_remove_urn_uuid(string, expected_string):
+    assert expected_string == remove_urn_uuid(string)
 
 
 @pytest.mark.parametrize('xml_path, mapper_class, expected_mapper', [
@@ -132,3 +140,155 @@ def test_airport_heliport_mapper(xml_path, mapper_class, expected_mapper):
     xml_path = os.path.join(path, xml_path)
 
     assert [expected_mapper] == xml_map(xml_path, mapper_class)
+
+
+@pytest.mark.parametrize('mapper, expected_dict', [
+    (
+        AirportHeliportMapper(
+            identifier='2193b095-8bd7-40e4-ba10-2a5a3cf29901',
+            interpretation='BASELINE',
+            name="AUKI/GWAUNARU'U",
+            icao_location_indicator='AGGA',
+            iata_designator='AKS',
+            type='OTHER',
+            control_type='CIVIL',
+            position='-8.698333333333334 160.67833333333334',
+            srs_name='urn:ogc:def:crs:EPSG::4326',
+            elevation=0.0,
+            elevation_uom='FT',
+            begin_lifetime=datetime.datetime(2013, 11, 14, 0, 0),
+            end_lifetime=None
+        ),
+        {
+            'identifier': '2193b095-8bd7-40e4-ba10-2a5a3cf29901',
+            'interpretation': 'BASELINE',
+            'name': "AUKI/GWAUNARU'U",
+            'icao_location_indicator': 'AGGA',
+            'iata_designator': 'AKS',
+            'type': 'OTHER',
+            'control_type': 'CIVIL',
+            'srs_name': 'urn:ogc:def:crs:EPSG::4326',
+            'elevation': 0.0,
+            'elevation_uom': 'FT',
+            'begin_lifetime': datetime.datetime(2013, 11, 14, 0, 0),
+            'end_lifetime': None,
+            'longitude': -8.698333333333334,
+            'latitude': 160.67833333333334
+        }
+    ),
+    (
+        DesignatedPointMapper(
+            identifier='2e71b1e5-735e-4f46-b986-52271dc22c7d',
+            interpretation='BASELINE',
+            name='10N030W',
+            designator=None,
+            type='COORD',
+            position='10.0 -30.0',
+            srs_name='urn:ogc:def:crs:EPSG::4326',
+            elevation=None,
+            elevation_uom=None,
+            begin_lifetime=datetime.datetime(2006, 6, 8, 0, 0),
+            end_lifetime=None
+        ),
+        {
+            'identifier': '2e71b1e5-735e-4f46-b986-52271dc22c7d',
+            'interpretation': 'BASELINE',
+            'name': '10N030W',
+            'designator': None,
+            'type': 'COORD',
+            'srs_name': 'urn:ogc:def:crs:EPSG::4326',
+            'elevation': None,
+            'elevation_uom': None,
+            'begin_lifetime': datetime.datetime(2006, 6, 8, 0, 0),
+            'end_lifetime': None,
+            'longitude': 10.0,
+            'latitude': -30.0
+        }
+    ),
+    (
+        NavaidMapper(
+            identifier='9f9a0a70-cacb-4435-81b8-f99348371a9f',
+            interpretation='BASELINE',
+            name='AASIAAT',
+            designator='AA',
+            type='NDB_MKR',
+            position='68.72305555555556 -52.78472222222222',
+            srs_name='urn:ogc:def:crs:EPSG::4326',
+            elevation=None,
+            elevation_uom=None,
+            begin_lifetime=datetime.datetime(2010, 4, 8, 0, 0),
+            end_lifetime=None
+        ),
+        {
+            'identifier': '9f9a0a70-cacb-4435-81b8-f99348371a9f',
+            'interpretation': 'BASELINE',
+            'name': 'AASIAAT',
+            'designator': 'AA',
+            'type': 'NDB_MKR',
+            'srs_name': 'urn:ogc:def:crs:EPSG::4326',
+            'elevation': None,
+            'elevation_uom': None,
+            'begin_lifetime': datetime.datetime(2010, 4, 8, 0, 0),
+            'end_lifetime': None,
+            'longitude': 68.72305555555556,
+            'latitude': -52.78472222222222
+        }
+    ),
+    (
+        RouteMapper(
+            identifier='024bb6f8-3265-472a-9988-c765f519bcef',
+            interpretation='BASELINE',
+            designator_prefix=None,
+            designator_second_letter='A',
+            designator_number=100,
+            type='ATS',
+            begin_lifetime=None,
+            end_lifetime=None
+        ),
+        {
+            'identifier': '024bb6f8-3265-472a-9988-c765f519bcef',
+            'interpretation': 'BASELINE',
+            'designator_prefix': None,
+            'designator_second_letter': 'A',
+            'designator_number': 100,
+            'type': 'ATS',
+            'begin_lifetime': None,
+            'end_lifetime': None
+        }
+    ),
+    (
+        RouteSegmentMapper(
+            identifier='5f7c0b50-b667-470e-953f-8ae479a5df3e',
+            interpretation='BASELINE',
+            start='ed74d8c5-91c6-4567-a95d-602cd48c19f4',
+            end='c80de58f-5a48-4308-9239-cf699429b4b0',
+            upper_limit=430,
+            upper_limit_uom='FL',
+            upper_limit_ref='STD',
+            lower_limit=265,
+            lower_limit_uom='FL',
+            lower_limit_ref='STD',
+            route_formed='024bb6f8-3265-472a-9988-c765f519bcef',
+            begin_lifetime=datetime.datetime(2018, 3, 29, 0, 0),
+            end_lifetime=None
+        ),
+        {
+            'identifier': '5f7c0b50-b667-470e-953f-8ae479a5df3e',
+            'interpretation': 'BASELINE',
+            'start': 'ed74d8c5-91c6-4567-a95d-602cd48c19f4',
+            'end': 'c80de58f-5a48-4308-9239-cf699429b4b0',
+            'upper_limit': 430,
+            'upper_limit_uom': 'FL',
+            'upper_limit_ref': 'STD',
+            'lower_limit': 265,
+            'lower_limit_uom': 'FL',
+            'lower_limit_ref': 'STD',
+            'route_formed': '024bb6f8-3265-472a-9988-c765f519bcef',
+            'begin_lifetime': datetime.datetime(2018, 3, 29, 0, 0),
+            'end_lifetime': None
+        }
+    )
+])
+def test_mapper__to_dict(mapper, expected_dict):
+    assert expected_dict == mapper.to_dict()
+

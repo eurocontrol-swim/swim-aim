@@ -27,13 +27,22 @@ http://opensource.org/licenses/BSD-3-Clause
 
 Details on EUROCONTROL: http://www.eurocontrol.int
 """
+from typing import Dict
+
+from swim_aim.utils import string_to_coordinates
+from swim_aim.xml import MappedValueType
 from swim_aim.xml.mapper import Mapper
 from swim_aim.xml.mapper_fields import MapperField, FloatMapperField, DatetimeMapperField, IntegerMapperField
 
 __author__ = "EUROCONTROL (SWIM)"
 
 
-def remove_urn_uuid(value):
+def remove_urn_uuid(value: str) -> str:
+    """
+    Removes the leading 'urn:uuid:' from a string
+    :param value:
+    :return:
+    """
     return value.replace('urn:uuid:', '')
 
 
@@ -55,6 +64,15 @@ class AirportHeliportMapper(Mapper):
     begin_lifetime = DatetimeMapperField(xpath='./aixm:timeSlice/aixm:AirportHeliportTimeSlice/aixm:featureLifetime/gml:TimePeriod/gml:beginPosition')
     end_lifetime = DatetimeMapperField(xpath='./aixm:timeSlice/aixm:AirportHeliportTimeSlice/aixm:featureLifetime/gml:TimePeriod/gml:endPosition')
 
+    def to_dict(self) -> Dict[str, MappedValueType]:
+        mapper_dict = super().to_dict()
+
+        mapper_dict['longitude'], mapper_dict['latitude'] = string_to_coordinates(mapper_dict['position'])
+
+        del mapper_dict['position']
+
+        return mapper_dict
+
 
 class NavaidMapper(Mapper):
 
@@ -73,6 +91,15 @@ class NavaidMapper(Mapper):
     begin_lifetime = DatetimeMapperField(xpath='./aixm:timeSlice/aixm:NavaidTimeSlice/aixm:featureLifetime/gml:TimePeriod/gml:beginPosition')
     end_lifetime = DatetimeMapperField(xpath='./aixm:timeSlice/aixm:NavaidTimeSlice/aixm:featureLifetime/gml:TimePeriod/gml:endPosition')
 
+    def to_dict(self) -> Dict[str, MappedValueType]:
+        mapper_dict = super().to_dict()
+
+        mapper_dict['longitude'], mapper_dict['latitude'] = string_to_coordinates(mapper_dict['position'])
+
+        del mapper_dict['position']
+
+        return mapper_dict
+
 
 class DesignatedPointMapper(Mapper):
 
@@ -90,6 +117,15 @@ class DesignatedPointMapper(Mapper):
     elevation_uom = MapperField(xpath='./aixm:timeSlice/aixm:DesignatedPointTimeSlice/aixm:location/aixm:Point/aixm:elevation/@uom')
     begin_lifetime = DatetimeMapperField(xpath='./aixm:timeSlice/aixm:DesignatedPointTimeSlice/aixm:featureLifetime/gml:TimePeriod/gml:beginPosition')
     end_lifetime = DatetimeMapperField(xpath='./aixm:timeSlice/aixm:DesignatedPointTimeSlice/aixm:featureLifetime/gml:TimePeriod/gml:endPosition')
+
+    def to_dict(self) -> Dict[str, MappedValueType]:
+        mapper_dict = super().to_dict()
+
+        mapper_dict['longitude'], mapper_dict['latitude'] = string_to_coordinates(mapper_dict['position'])
+
+        del mapper_dict['position']
+
+        return mapper_dict
 
 
 class RouteMapper(Mapper):
