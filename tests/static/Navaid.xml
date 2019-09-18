@@ -1,0 +1,32 @@
+<?xml version='1.0' encoding='UTF-8'?><adrmsg:ADRMessage xmlns:adrmsg="http://www.eurocontrol.int/cfmu/b2b/ADRMessage" xmlns:gml="http://www.opengis.net/gml/3.2" gml:id="ID_5052_1548813652630_1">
+    <adrmsg:hasMember>
+        <aixm:Navaid xmlns:aixm="http://www.aixm.aero/schema/5.1" gml:id="ID_5096_1548813710547_2">
+            <gml:identifier codeSpace="urn:uuid:">9f9a0a70-cacb-4435-81b8-f99348371a9f</gml:identifier>
+            <aixm:timeSlice>
+                <aixm:NavaidTimeSlice gml:id="ID_5096_1548813710547_3">
+                    <gml:validTime>
+                        <gml:TimePeriod gml:id="ID_5096_1548813710547_4">
+                            <gml:beginPosition>2010-04-08T00:00:00</gml:beginPosition>
+                            <gml:endPosition indeterminatePosition="unknown"/>
+                        </gml:TimePeriod>
+                    </gml:validTime>
+                    <aixm:interpretation>BASELINE</aixm:interpretation>
+                    <aixm:featureLifetime>
+                        <gml:TimePeriod gml:id="ID_5096_1548813710547_5">
+                            <gml:beginPosition>2010-04-08T00:00:00</gml:beginPosition>
+                            <gml:endPosition indeterminatePosition="unknown"/>
+                        </gml:TimePeriod>
+                    </aixm:featureLifetime>
+                    <aixm:type>NDB_MKR</aixm:type>
+                    <aixm:designator>AA</aixm:designator>
+                    <aixm:name>AASIAAT</aixm:name>
+                    <aixm:location>
+                        <aixm:ElevatedPoint gml:id="ID_5096_1548813710547_6">
+                            <gml:pos srsName="urn:ogc:def:crs:EPSG::4326">68.72305555555556 -52.78472222222222</gml:pos>
+                        </aixm:ElevatedPoint>
+                    </aixm:location>
+                </aixm:NavaidTimeSlice>
+            </aixm:timeSlice>
+        </aixm:Navaid>
+    </adrmsg:hasMember>
+</adrmsg:ADRMessage>

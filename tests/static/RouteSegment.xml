@@ -1,0 +1,169 @@
+<?xml version='1.0' encoding='UTF-8'?><adrmsg:ADRMessage xmlns:adrmsg="http://www.eurocontrol.int/cfmu/b2b/ADRMessage" xmlns:gml="http://www.opengis.net/gml/3.2" gml:id="ID_5052_1548813652630_1">
+    <adrmsg:hasMember>
+    <aixm:RouteSegment xmlns:aixm="http://www.aixm.aero/schema/5.1" gml:id="ID_5063_1548813656537_2">
+        <gml:identifier codeSpace="urn:uuid:">5f7c0b50-b667-470e-953f-8ae479a5df3e</gml:identifier>
+        <aixm:timeSlice>
+            <aixm:RouteSegmentTimeSlice gml:id="ID_5063_1548813656537_3">
+                <gml:validTime>
+                    <gml:TimePeriod gml:id="ID_5063_1548813656537_4">
+                        <gml:beginPosition>2018-03-29T00:00:00</gml:beginPosition>
+                        <gml:endPosition indeterminatePosition="unknown"/>
+                    </gml:TimePeriod>
+                </gml:validTime>
+                <aixm:interpretation>BASELINE</aixm:interpretation>
+                <aixm:featureLifetime>
+                    <gml:TimePeriod gml:id="ID_5063_1548813656537_5">
+                        <gml:beginPosition>2018-03-29T00:00:00</gml:beginPosition>
+                        <gml:endPosition indeterminatePosition="unknown"/>
+                    </gml:TimePeriod>
+                </aixm:featureLifetime>
+                <aixm:upperLimit uom="FL">430</aixm:upperLimit>
+                <aixm:upperLimitReference>STD</aixm:upperLimitReference>
+                <aixm:lowerLimit uom="FL">265</aixm:lowerLimit>
+                <aixm:lowerLimitReference>STD</aixm:lowerLimitReference>
+                <aixm:start>
+                    <aixm:EnRouteSegmentPoint gml:id="ID_5063_1548813656537_6">
+                        <aixm:pointChoice_navaidSystem xmlns:xlink="http://www.w3.org/1999/xlink"
+                                                       xlink:href="urn:uuid:ed74d8c5-91c6-4567-a95d-602cd48c19f4"/>
+                    </aixm:EnRouteSegmentPoint>
+                </aixm:start>
+                <aixm:routeFormed xmlns:xlink="http://www.w3.org/1999/xlink"
+                                  xlink:href="urn:uuid:024bb6f8-3265-472a-9988-c765f519bcef"/>
+                <aixm:end>
+                    <aixm:EnRouteSegmentPoint gml:id="ID_5063_1548813656537_7">
+                        <aixm:pointChoice_fixDesignatedPoint xmlns:xlink="http://www.w3.org/1999/xlink"
+                                                             xlink:href="urn:uuid:c80de58f-5a48-4308-9239-cf699429b4b0"/>
+                    </aixm:EnRouteSegmentPoint>
+                </aixm:end>
+                <aixm:availability>
+                    <aixm:RouteAvailability gml:id="ID_5063_1548813656537_8">
+                        <aixm:timeInterval>
+                            <aixm:Timesheet gml:id="ID_5063_1548813656537_9">
+                                <aixm:timeReference>UTC</aixm:timeReference>
+                                <aixm:day>ANY</aixm:day>
+                                <aixm:startTime>00:00</aixm:startTime>
+                                <aixm:endTime>24:00</aixm:endTime>
+                                <aixm:extension>
+                                    <adrext:TimesheetExtension
+                                            xmlns:adrext="http://www.aixm.aero/schema/5.1/extensions/EUR/ADR"
+                                            gml:id="ID_5063_1548813656537_10">
+                                        <gml:validTime>
+                                            <gml:TimePeriod gml:id="ID_5063_1548813656537_11">
+                                                <gml:beginPosition>2018-03-29T00:00:00</gml:beginPosition>
+                                                <gml:endPosition indeterminatePosition="unknown"/>
+                                            </gml:TimePeriod>
+                                        </gml:validTime>
+                                    </adrext:TimesheetExtension>
+                                </aixm:extension>
+                            </aixm:Timesheet>
+                        </aixm:timeInterval>
+                        <aixm:direction>FORWARD</aixm:direction>
+                        <aixm:status>OPEN</aixm:status>
+                        <aixm:levels>
+                            <aixm:AirspaceLayer gml:id="ID_5063_1548813656537_12">
+                                <aixm:upperLimit uom="FL">430</aixm:upperLimit>
+                                <aixm:upperLimitReference>STD</aixm:upperLimitReference>
+                                <aixm:lowerLimit uom="FL">265</aixm:lowerLimit>
+                                <aixm:lowerLimitReference>STD</aixm:lowerLimitReference>
+                                <aixm:discreteLevelSeries xmlns:xlink="http://www.w3.org/1999/xlink"
+                                                          xlink:href="urn:x-nmb2b:SLC_EVEN_IFR"/>
+                            </aixm:AirspaceLayer>
+                        </aixm:levels>
+                    </aixm:RouteAvailability>
+                </aixm:availability>
+                <aixm:availability>
+                    <aixm:RouteAvailability gml:id="ID_5063_1548813656537_13">
+                        <aixm:timeInterval>
+                            <aixm:Timesheet gml:id="ID_5063_1548813656537_14">
+                                <aixm:timeReference>UTC</aixm:timeReference>
+                                <aixm:day>ANY</aixm:day>
+                                <aixm:startTime>00:00</aixm:startTime>
+                                <aixm:endTime>24:00</aixm:endTime>
+                                <aixm:extension>
+                                    <adrext:TimesheetExtension
+                                            xmlns:adrext="http://www.aixm.aero/schema/5.1/extensions/EUR/ADR"
+                                            gml:id="ID_5063_1548813656537_15">
+                                        <gml:validTime>
+                                            <gml:TimePeriod gml:id="ID_5063_1548813656537_16">
+                                                <gml:beginPosition>2018-03-29T00:00:00</gml:beginPosition>
+                                                <gml:endPosition indeterminatePosition="unknown"/>
+                                            </gml:TimePeriod>
+                                        </gml:validTime>
+                                    </adrext:TimesheetExtension>
+                                </aixm:extension>
+                            </aixm:Timesheet>
+                        </aixm:timeInterval>
+                        <aixm:direction>BACKWARD</aixm:direction>
+                        <aixm:status>OPEN</aixm:status>
+                        <aixm:levels>
+                            <aixm:AirspaceLayer gml:id="ID_5063_1548813656537_17">
+                                <aixm:upperLimit uom="FL">430</aixm:upperLimit>
+                                <aixm:upperLimitReference>STD</aixm:upperLimitReference>
+                                <aixm:lowerLimit uom="FL">265</aixm:lowerLimit>
+                                <aixm:lowerLimitReference>STD</aixm:lowerLimitReference>
+                                <aixm:discreteLevelSeries xmlns:xlink="http://www.w3.org/1999/xlink"
+                                                          xlink:href="urn:x-nmb2b:SLC_ODD_IFR"/>
+                            </aixm:AirspaceLayer>
+                        </aixm:levels>
+                    </aixm:RouteAvailability>
+                </aixm:availability>
+                <aixm:annotation>
+                    <aixm:Note gml:id="ID_5063_1548813656537_18">
+                        <aixm:purpose>REMARK</aixm:purpose>
+                        <aixm:translatedNote>
+                            <aixm:LinguisticNote gml:id="ID_5063_1548813656537_19">
+                                <aixm:note>PortionForward=1</aixm:note>
+                            </aixm:LinguisticNote>
+                        </aixm:translatedNote>
+                    </aixm:Note>
+                </aixm:annotation>
+                <aixm:annotation>
+                    <aixm:Note gml:id="ID_5063_1548813656537_20">
+                        <aixm:purpose>REMARK</aixm:purpose>
+                        <aixm:translatedNote>
+                            <aixm:LinguisticNote gml:id="ID_5063_1548813656537_21">
+                                <aixm:note>PortionBackward=4</aixm:note>
+                            </aixm:LinguisticNote>
+                        </aixm:translatedNote>
+                    </aixm:Note>
+                </aixm:annotation>
+                <aixm:extension>
+                    <adrext:RouteSegmentExtension xmlns:adrext="http://www.aixm.aero/schema/5.1/extensions/EUR/ADR"
+                                                  gml:id="ID_5063_1548813656537_22">
+                        <adrext:verticalLimit>
+                            <adrext:RouteSegmentVerticalLimit gml:id="ID_5063_1548813656537_23">
+                                <aixm:timeInterval>
+                                    <aixm:Timesheet gml:id="ID_5063_1548813656537_24">
+                                        <aixm:timeReference>UTC</aixm:timeReference>
+                                        <aixm:day>ANY</aixm:day>
+                                        <aixm:startTime>00:00</aixm:startTime>
+                                        <aixm:endTime>24:00</aixm:endTime>
+                                        <aixm:extension>
+                                            <adrext:TimesheetExtension gml:id="ID_5063_1548813656537_25">
+                                                <gml:validTime>
+                                                    <gml:TimePeriod gml:id="ID_5063_1548813656537_26">
+                                                        <gml:beginPosition>2018-03-01T00:00:00</gml:beginPosition>
+                                                        <gml:endPosition indeterminatePosition="unknown"/>
+                                                    </gml:TimePeriod>
+                                                </gml:validTime>
+                                            </adrext:TimesheetExtension>
+                                        </aixm:extension>
+                                    </aixm:Timesheet>
+                                </aixm:timeInterval>
+                                <adrext:range>
+                                    <aixm:AirspaceLayer gml:id="ID_5063_1548813656537_27">
+                                        <aixm:upperLimit uom="FL">430</aixm:upperLimit>
+                                        <aixm:upperLimitReference>STD</aixm:upperLimitReference>
+                                        <aixm:lowerLimit uom="FL">265</aixm:lowerLimit>
+                                        <aixm:lowerLimitReference>STD</aixm:lowerLimitReference>
+                                    </aixm:AirspaceLayer>
+                                </adrext:range>
+                            </adrext:RouteSegmentVerticalLimit>
+                        </adrext:verticalLimit>
+                    </adrext:RouteSegmentExtension>
+                </aixm:extension>
+            </aixm:RouteSegmentTimeSlice>
+        </aixm:timeSlice>
+    </aixm:RouteSegment>
+    </adrmsg:hasMember>
+</adrmsg:ADRMessage>

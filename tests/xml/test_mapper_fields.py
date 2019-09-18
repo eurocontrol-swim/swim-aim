@@ -35,7 +35,6 @@ from lxml import etree
 
 from swim_aim.xml import NAMESPACES
 from swim_aim.xml.mapper_fields import MapperField, DatetimeMapperField, FloatMapperField, IntegerMapperField
-from tests.xml.utils import get_airport_heliport_element
 
 __author__ = "EUROCONTROL (SWIM)"
 

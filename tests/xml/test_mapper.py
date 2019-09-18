@@ -98,7 +98,7 @@ def test_mapper__from_dict(mock_from_xml):
 
 def test_xml_map__returns_list_of_mapper_instances_of_the_provided_class():
     path = os.path.dirname(os.path.abspath(__file__))
-    xml_path = os.path.join(path, 'static/AirportHeliport.xml')
+    xml_path = os.path.join(path, '../static/AirportHeliport.xml')
     mappers = xml_map(xml_path, AirportHeliportMapper)
 
     assert isinstance(mappers, list)

@@ -76,6 +76,12 @@ class Mapper(metaclass=MetaMapper):
             if isinstance(value, MapperField):
                 self.__dict__[attr] = kwargs.get(attr)
 
+    def __eq__(self, other) -> bool:
+        return isinstance(other, self.__class__) and other.__dict__ == self.__dict__
+
+    def __ne__(self, other) -> bool:
+        return not other == self
+
     @classmethod
     def map(cls, element: etree.Element, instance=None):
         """

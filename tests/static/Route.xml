@@ -1,0 +1,27 @@
+<?xml version='1.0' encoding='UTF-8'?><adrmsg:ADRMessage xmlns:adrmsg="http://www.eurocontrol.int/cfmu/b2b/ADRMessage" xmlns:gml="http://www.opengis.net/gml/3.2" gml:id="ID_5052_1548813652630_1">
+    <adrmsg:hasMember>
+    <aixm:Route xmlns:aixm="http://www.aixm.aero/schema/5.1" gml:id="ID_5062_1548813656537_2">
+        <gml:identifier codeSpace="urn:uuid:">024bb6f8-3265-472a-9988-c765f519bcef</gml:identifier>
+        <aixm:timeSlice>
+            <aixm:RouteTimeSlice gml:id="ID_5062_1548813656537_3">
+                <gml:validTime>
+                    <gml:TimePeriod gml:id="ID_5062_1548813656537_4">
+                        <gml:beginPosition>2018-03-29T00:00:00</gml:beginPosition>
+                        <gml:endPosition indeterminatePosition="unknown"/>
+                    </gml:TimePeriod>
+                </gml:validTime>
+                <aixm:interpretation>BASELINE</aixm:interpretation>
+                <aixm:featureLifetime>
+                    <gml:TimePeriod gml:id="ID_5062_1548813656537_5">
+                        <gml:beginPosition>2018-03-29T00:00:00</gml:beginPosition>
+                        <gml:endPosition indeterminatePosition="unknown"/>
+                    </gml:TimePeriod>
+                </aixm:featureLifetime>
+                <aixm:designatorSecondLetter>A</aixm:designatorSecondLetter>
+                <aixm:designatorNumber>100</aixm:designatorNumber>
+                <aixm:type>ATS</aixm:type>
+            </aixm:RouteTimeSlice>
+        </aixm:timeSlice>
+    </aixm:Route>
+    </adrmsg:hasMember>
+</adrmsg:ADRMessage>

@@ -1,0 +1,31 @@
+<?xml version='1.0' encoding='UTF-8'?><adrmsg:ADRMessage xmlns:adrmsg="http://www.eurocontrol.int/cfmu/b2b/ADRMessage" xmlns:gml="http://www.opengis.net/gml/3.2" gml:id="ID_5052_1548813652630_1">
+    <adrmsg:hasMember>
+        <aixm:DesignatedPoint xmlns:aixm="http://www.aixm.aero/schema/5.1" gml:id="ID_5072_1548813659342_22">
+            <gml:identifier codeSpace="urn:uuid:">2e71b1e5-735e-4f46-b986-52271dc22c7d</gml:identifier>
+            <aixm:timeSlice>
+                <aixm:DesignatedPointTimeSlice gml:id="ID_5072_1548813659342_23">
+                    <gml:validTime>
+                        <gml:TimePeriod gml:id="ID_5072_1548813659342_24">
+                            <gml:beginPosition>2006-06-08T00:00:00</gml:beginPosition>
+                            <gml:endPosition indeterminatePosition="unknown"/>
+                        </gml:TimePeriod>
+                    </gml:validTime>
+                    <aixm:interpretation>BASELINE</aixm:interpretation>
+                    <aixm:featureLifetime>
+                        <gml:TimePeriod gml:id="ID_5072_1548813659342_25">
+                            <gml:beginPosition>2006-06-08T00:00:00</gml:beginPosition>
+                            <gml:endPosition indeterminatePosition="unknown"/>
+                        </gml:TimePeriod>
+                    </aixm:featureLifetime>
+                    <aixm:type>COORD</aixm:type>
+                    <aixm:name>10N030W</aixm:name>
+                    <aixm:location>
+                        <aixm:Point gml:id="ID_5072_1548813659342_26">
+                            <gml:pos srsName="urn:ogc:def:crs:EPSG::4326">10.0 -30.0</gml:pos>
+                        </aixm:Point>
+                    </aixm:location>
+                </aixm:DesignatedPointTimeSlice>
+            </aixm:timeSlice>
+        </aixm:DesignatedPoint>
+    </adrmsg:hasMember>
+</adrmsg:ADRMessage>
