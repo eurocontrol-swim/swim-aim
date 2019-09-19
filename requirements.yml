@@ -19,3 +19,4 @@ dependencies:
   - psycopg2-binary
   - geojson
   - zeep
+  - git+https://git@bitbucket.org/antavelos-eurocontrol/swim-backend.git
