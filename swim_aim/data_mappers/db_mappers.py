@@ -32,13 +32,13 @@ from typing import Dict, Union
 from swim_xml import MappedValueType
 from swim_aim.data_mappers.xml_mappers import AirportHeliportXMLMapper, DesignatedPointXMLMapper, NavaidXMLMapper, \
     RouteXMLMapper, RouteSegmentXMLMapper
-from swim_aim.db.models import AirportHeliport, Point, Route, RouteSegment, POINT_TYPE
+import swim_aim.db.models as db_models
 from swim_aim.data_mappers.utils import string_to_coordinates
 
 __author__ = "EUROCONTROL (SWIM)"
 
 
-def handle_position(mapper_dict: Dict[str, MappedValueType]) -> Dict[str, MappedValueType]:
+def _handle_position(mapper_dict: Dict[str, MappedValueType]) -> Dict[str, MappedValueType]:
     mapper_dict['latitude'], mapper_dict['longitude'] = string_to_coordinates(mapper_dict['position'])
 
     del mapper_dict['position']
@@ -46,31 +46,33 @@ def handle_position(mapper_dict: Dict[str, MappedValueType]) -> Dict[str, Mapped
     return mapper_dict
 
 
-def map_from_airport_heliport_xml_mapper(airport_heliport_mapper: AirportHeliportXMLMapper) -> AirportHeliport:
+def map_from_airport_heliport_xml_mapper(
+        airport_heliport_mapper: AirportHeliportXMLMapper) -> db_models.AirportHeliport:
+
     airport_heliport_mapper_dict = airport_heliport_mapper.to_dict()
 
-    airport_heliport_mapper_dict = handle_position(airport_heliport_mapper_dict)
+    airport_heliport_mapper_dict = _handle_position(airport_heliport_mapper_dict)
 
-    return AirportHeliport(**airport_heliport_mapper_dict)
+    return db_models.AirportHeliport(**airport_heliport_mapper_dict)
 
 
-def map_from_point_xml_mapper(point_mapper: Union[NavaidXMLMapper, DesignatedPointXMLMapper]) -> Point:
+def map_from_point_xml_mapper(point_mapper: Union[NavaidXMLMapper, DesignatedPointXMLMapper]) -> db_models.Point:
     point_mapper_dict = point_mapper.to_dict()
 
-    point_mapper_dict = handle_position(point_mapper_dict)
+    point_mapper_dict = _handle_position(point_mapper_dict)
 
     point_types = {
-        NavaidXMLMapper: POINT_TYPE.NAVAID,
-        DesignatedPointXMLMapper: POINT_TYPE.DESIGNATED_POINT
+        NavaidXMLMapper: db_models.POINT_TYPE.NAVAID,
+        DesignatedPointXMLMapper: db_models.POINT_TYPE.DESIGNATED_POINT
     }
     point_mapper_dict['point_type'] = point_types[point_mapper.__class__]
 
-    return Point(**point_mapper_dict)
+    return db_models.Point(**point_mapper_dict)
 
 
-def map_from_route_xml_mapper(route_mapper: RouteXMLMapper) -> Route:
-    return Route(**route_mapper.to_dict())
+def map_from_route_xml_mapper(route_mapper: RouteXMLMapper) -> db_models.Route:
+    return db_models.Route(**route_mapper.to_dict())
 
 
-def map_from_route_segment_xml_mapper(route_segment_mapper: RouteSegmentXMLMapper) -> RouteSegment:
-    return RouteSegment(**route_segment_mapper.to_dict())
+def map_from_route_segment_xml_mapper(route_segment_mapper: RouteSegmentXMLMapper) -> db_models.RouteSegment:
+    return db_models.RouteSegment(**route_segment_mapper.to_dict())

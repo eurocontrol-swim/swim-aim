@@ -71,7 +71,7 @@ def test_mapper__map_returns_instance_with_mapped_values_on_the_mapped_fields(mo
         field2 = XMLMapperField(xpath='./xpath')
         field3 = XMLMapperField(xpath='./xpath')
 
-    my_mapper = MyXMLMapper.map(mock.Mock())
+    my_mapper = MyXMLMapper.from_xml(mock.Mock())
 
     assert 'value' == my_mapper.field1
     assert 'value' == my_mapper.field2
@@ -88,7 +88,7 @@ def test_mapper__from_dict(mock_from_xml):
         field2 = XMLMapperField(xpath='./xpath')
         field3 = XMLMapperField(xpath='./xpath')
 
-    my_mapper = MyXMLMapper.map(mock.Mock())
+    my_mapper = MyXMLMapper.from_xml(mock.Mock())
 
     assert {
         'field1': 'value',

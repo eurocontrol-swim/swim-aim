@@ -83,7 +83,7 @@ class XMLMapper(metaclass=MetaMapper):
         return not other == self
 
     @classmethod
-    def map(cls, element: etree.Element, instance=None):
+    def from_xml(cls, element: etree.Element, instance=None):
         """
         Map the provided XML element to the XMLMapperField attributes of the class and returns a XMLMapper instance
 
@@ -115,6 +115,6 @@ def xml_map(file_path: str, mapper_class: Type[XMLMapper]) -> List[Type[XMLMappe
 
     elements = xml.findall(mapper_class.root_xpath, NAMESPACES)
 
-    mappers = [mapper_class.map(element) for element in elements]
+    mappers = [mapper_class.from_xml(element) for element in elements]
 
     return mappers
