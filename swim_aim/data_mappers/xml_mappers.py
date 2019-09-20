@@ -27,9 +27,9 @@ http://opensource.org/licenses/BSD-3-Clause
 
 Details on EUROCONTROL: http://www.eurocontrol.int
 """
-from swim_aim.data_mappers.xml.mapper import Mapper
-from swim_aim.data_mappers.xml.mapper_fields import MapperField, FloatMapperField, DatetimeMapperField, \
-    IntegerMapperField
+from swim_aim.data_mappers.xml.mapper import XMLMapper
+from swim_aim.data_mappers.xml.mapper_fields import XMLMapperField, FloatXMLMapperField, DatetimeXMLMapperField, \
+    IntegerXMLMapperField
 
 __author__ = "EUROCONTROL (SWIM)"
 
@@ -43,94 +43,96 @@ def remove_urn_uuid(value: str) -> str:
     return value.replace('urn:uuid:', '')
 
 
-class AirportHeliportMapper(Mapper):
+class AirportHeliportXMLMapper(XMLMapper):
 
     root_xpath = './adrmsg:hasMember/aixm:AirportHeliport'
 
-    identifier = MapperField(xpath='./gml:identifier', post_map=remove_urn_uuid)
-    interpretation = MapperField(xpath='./aixm:timeSlice/aixm:AirportHeliportTimeSlice/aixm:interpretation')
-    name = MapperField(xpath='./aixm:timeSlice/aixm:AirportHeliportTimeSlice/aixm:name')
-    icao_location_indicator = MapperField(xpath='./aixm:timeSlice/aixm:AirportHeliportTimeSlice/aixm:locationIndicatorICAO')
-    iata_designator = MapperField(xpath='./aixm:timeSlice/aixm:AirportHeliportTimeSlice/aixm:designatorIATA')
-    type = MapperField(xpath='./aixm:timeSlice/aixm:AirportHeliportTimeSlice/aixm:type')
-    control_type = MapperField(xpath='./aixm:timeSlice/aixm:AirportHeliportTimeSlice/aixm:controlType')
-    position = MapperField(xpath='./aixm:timeSlice/aixm:AirportHeliportTimeSlice/aixm:ARP/aixm:ElevatedPoint/gml:pos')
-    srs_name = MapperField(xpath='./aixm:timeSlice/aixm:AirportHeliportTimeSlice/aixm:ARP/aixm:ElevatedPoint/gml:pos/@srsName')
-    elevation = FloatMapperField(xpath='./aixm:timeSlice/aixm:AirportHeliportTimeSlice/aixm:ARP/aixm:ElevatedPoint/aixm:elevation')
-    elevation_uom = MapperField(xpath='./aixm:timeSlice/aixm:AirportHeliportTimeSlice/aixm:ARP/aixm:ElevatedPoint/aixm:elevation/@uom')
-    begin_lifetime = DatetimeMapperField(xpath='./aixm:timeSlice/aixm:AirportHeliportTimeSlice/aixm:featureLifetime/gml:TimePeriod/gml:beginPosition')
-    end_lifetime = DatetimeMapperField(xpath='./aixm:timeSlice/aixm:AirportHeliportTimeSlice/aixm:featureLifetime/gml:TimePeriod/gml:endPosition')
+    identifier = XMLMapperField(xpath='./gml:identifier', post_map=remove_urn_uuid)
+    interpretation = XMLMapperField(xpath='./aixm:timeSlice/aixm:AirportHeliportTimeSlice/aixm:interpretation')
+    name = XMLMapperField(xpath='./aixm:timeSlice/aixm:AirportHeliportTimeSlice/aixm:name')
+    icao_location_indicator = XMLMapperField(xpath='./aixm:timeSlice/aixm:AirportHeliportTimeSlice/aixm:locationIndicatorICAO')
+    iata_designator = XMLMapperField(xpath='./aixm:timeSlice/aixm:AirportHeliportTimeSlice/aixm:designatorIATA')
+    type = XMLMapperField(xpath='./aixm:timeSlice/aixm:AirportHeliportTimeSlice/aixm:type')
+    control_type = XMLMapperField(xpath='./aixm:timeSlice/aixm:AirportHeliportTimeSlice/aixm:controlType')
+    position = XMLMapperField(xpath='./aixm:timeSlice/aixm:AirportHeliportTimeSlice/aixm:ARP/aixm:ElevatedPoint/gml:pos')
+    srs_name = XMLMapperField(xpath='./aixm:timeSlice/aixm:AirportHeliportTimeSlice/aixm:ARP/aixm:ElevatedPoint/gml:pos/@srsName')
+    elevation = FloatXMLMapperField(xpath='./aixm:timeSlice/aixm:AirportHeliportTimeSlice/aixm:ARP/aixm:ElevatedPoint/aixm:elevation')
+    elevation_uom = XMLMapperField(xpath='./aixm:timeSlice/aixm:AirportHeliportTimeSlice/aixm:ARP/aixm:ElevatedPoint/aixm:elevation/@uom')
+    begin_lifetime = DatetimeXMLMapperField(xpath='./aixm:timeSlice/aixm:AirportHeliportTimeSlice/aixm:featureLifetime/gml:TimePeriod/gml:beginPosition')
+    end_lifetime = DatetimeXMLMapperField(xpath='./aixm:timeSlice/aixm:AirportHeliportTimeSlice/aixm:featureLifetime/gml:TimePeriod/gml:endPosition')
 
 
-class NavaidMapper(Mapper):
+class NavaidXMLMapper(XMLMapper):
 
     root_xpath = './adrmsg:hasMember/aixm:Navaid'
 
-    identifier = MapperField(xpath='./gml:identifier', post_map=remove_urn_uuid)
-    interpretation = MapperField(xpath='./aixm:timeSlice/aixm:NavaidTimeSlice/aixm:interpretation')
-    name = MapperField(xpath='./aixm:timeSlice/aixm:NavaidTimeSlice/aixm:name')
-    designator = MapperField(xpath='./aixm:timeSlice/aixm:NavaidTimeSlice/aixm:designator')
-    type = MapperField(xpath='./aixm:timeSlice/aixm:NavaidTimeSlice/aixm:type')
-    position = MapperField(xpath='./aixm:timeSlice/aixm:NavaidTimeSlice/aixm:location/aixm:ElevatedPoint/gml:pos')
-    srs_name = MapperField(xpath='./aixm:timeSlice/aixm:NavaidTimeSlice/aixm:location/aixm:ElevatedPoint/gml:pos/@srsName')
-    elevation = FloatMapperField(xpath='./aixm:timeSlice/aixm:NavaidTimeSlice/aixm:location/aixm:ElevatedPoint/aixm:elevation',
-                                 strict=False)
-    elevation_uom = MapperField(xpath='./aixm:timeSlice/aixm:NavaidTimeSlice/aixm:location/aixm:ElevatedPoint/aixm:elevation/@uom')
-    begin_lifetime = DatetimeMapperField(xpath='./aixm:timeSlice/aixm:NavaidTimeSlice/aixm:featureLifetime/gml:TimePeriod/gml:beginPosition')
-    end_lifetime = DatetimeMapperField(xpath='./aixm:timeSlice/aixm:NavaidTimeSlice/aixm:featureLifetime/gml:TimePeriod/gml:endPosition')
+    identifier = XMLMapperField(xpath='./gml:identifier', post_map=remove_urn_uuid)
+    interpretation = XMLMapperField(xpath='./aixm:timeSlice/aixm:NavaidTimeSlice/aixm:interpretation')
+    name = XMLMapperField(xpath='./aixm:timeSlice/aixm:NavaidTimeSlice/aixm:name')
+    designator = XMLMapperField(xpath='./aixm:timeSlice/aixm:NavaidTimeSlice/aixm:designator')
+    type = XMLMapperField(xpath='./aixm:timeSlice/aixm:NavaidTimeSlice/aixm:type')
+    position = XMLMapperField(xpath='./aixm:timeSlice/aixm:NavaidTimeSlice/aixm:location/aixm:ElevatedPoint/gml:pos')
+    srs_name = XMLMapperField(xpath='./aixm:timeSlice/aixm:NavaidTimeSlice/aixm:location/aixm:ElevatedPoint/gml:pos/@srsName')
+    elevation = FloatXMLMapperField(xpath='./aixm:timeSlice/aixm:NavaidTimeSlice/aixm:location/aixm:ElevatedPoint/aixm:elevation',
+                                    strict=False)
+    elevation_uom = XMLMapperField(xpath='./aixm:timeSlice/aixm:NavaidTimeSlice/aixm:location/aixm:ElevatedPoint/aixm:elevation/@uom')
+    begin_lifetime = DatetimeXMLMapperField(xpath='./aixm:timeSlice/aixm:NavaidTimeSlice/aixm:featureLifetime/gml:TimePeriod/gml:beginPosition')
+    end_lifetime = DatetimeXMLMapperField(xpath='./aixm:timeSlice/aixm:NavaidTimeSlice/aixm:featureLifetime/gml:TimePeriod/gml:endPosition')
 
 
-class DesignatedPointMapper(Mapper):
+class DesignatedPointXMLMapper(XMLMapper):
 
     root_xpath = './adrmsg:hasMember/aixm:DesignatedPoint'
 
-    identifier = MapperField(xpath='./gml:identifier', post_map=remove_urn_uuid)
-    interpretation = MapperField(xpath='./aixm:timeSlice/aixm:DesignatedPointTimeSlice/aixm:interpretation')
-    name = MapperField(xpath='./aixm:timeSlice/aixm:DesignatedPointTimeSlice/aixm:name')
-    designator = MapperField(xpath='./aixm:timeSlice/aixm:DesignatedPointTimeSlice/aixm:designator')
-    type = MapperField(xpath='./aixm:timeSlice/aixm:DesignatedPointTimeSlice/aixm:type')
-    position = MapperField(xpath='./aixm:timeSlice/aixm:DesignatedPointTimeSlice/aixm:location/aixm:Point/gml:pos')
-    srs_name = MapperField(xpath='./aixm:timeSlice/aixm:DesignatedPointTimeSlice/aixm:location/aixm:Point/gml:pos/@srsName')
-    elevation = FloatMapperField(xpath='./aixm:timeSlice/aixm:DesignatedPointTimeSlice/aixm:location/aixm:Point/aixm:elevation',
-                                 strict=False)
-    elevation_uom = MapperField(xpath='./aixm:timeSlice/aixm:DesignatedPointTimeSlice/aixm:location/aixm:Point/aixm:elevation/@uom')
-    begin_lifetime = DatetimeMapperField(xpath='./aixm:timeSlice/aixm:DesignatedPointTimeSlice/aixm:featureLifetime/gml:TimePeriod/gml:beginPosition')
-    end_lifetime = DatetimeMapperField(xpath='./aixm:timeSlice/aixm:DesignatedPointTimeSlice/aixm:featureLifetime/gml:TimePeriod/gml:endPosition')
+    identifier = XMLMapperField(xpath='./gml:identifier', post_map=remove_urn_uuid)
+    interpretation = XMLMapperField(xpath='./aixm:timeSlice/aixm:DesignatedPointTimeSlice/aixm:interpretation')
+    name = XMLMapperField(xpath='./aixm:timeSlice/aixm:DesignatedPointTimeSlice/aixm:name')
+    designator = XMLMapperField(xpath='./aixm:timeSlice/aixm:DesignatedPointTimeSlice/aixm:designator')
+    type = XMLMapperField(xpath='./aixm:timeSlice/aixm:DesignatedPointTimeSlice/aixm:type')
+    position = XMLMapperField(xpath='./aixm:timeSlice/aixm:DesignatedPointTimeSlice/aixm:location/aixm:Point/gml:pos')
+    srs_name = XMLMapperField(xpath='./aixm:timeSlice/aixm:DesignatedPointTimeSlice/aixm:location/aixm:Point/gml:pos/@srsName')
+    elevation = FloatXMLMapperField(xpath='./aixm:timeSlice/aixm:DesignatedPointTimeSlice/aixm:location/aixm:Point/aixm:elevation',
+                                    strict=False)
+    elevation_uom = XMLMapperField(xpath='./aixm:timeSlice/aixm:DesignatedPointTimeSlice/aixm:location/aixm:Point/aixm:elevation/@uom')
+    begin_lifetime = DatetimeXMLMapperField(xpath='./aixm:timeSlice/aixm:DesignatedPointTimeSlice/aixm:featureLifetime/gml:TimePeriod/gml:beginPosition')
+    end_lifetime = DatetimeXMLMapperField(xpath='./aixm:timeSlice/aixm:DesignatedPointTimeSlice/aixm:featureLifetime/gml:TimePeriod/gml:endPosition')
 
 
-class RouteMapper(Mapper):
+class RouteXMLMapper(XMLMapper):
 
     root_xpath = './adrmsg:hasMember/aixm:Route'
 
-    identifier = MapperField(xpath='./gml:identifier')
-    interpretation = MapperField(xpath='./aixm:timeSlice/aixm:RouteTimeSlice/aixm:interpretation')
-    designator_prefix = MapperField(xpath='./aixm:timeSlice/aixm:RouteTimeSlice/aixm:designatorPrefix')
-    designator_second_letter = MapperField(xpath='./aixm:timeSlice/aixm:RouteTimeSlice/aixm:designatorSecondLetter')
-    designator_number = IntegerMapperField(xpath='./aixm:timeSlice/aixm:RouteTimeSlice/aixm:designatorNumber',
-                                           strict=False)
-    type = MapperField(xpath='./aixm:timeSlice/aixm:RouteTimeSlice/aixm:type')
-    begin_lifetime = DatetimeMapperField(xpath='./aixm:timeSlice/aixm:RoutetTimeSlice/aixm:featureLifetime/gml:TimePeriod/gml:beginPosition')
-    end_lifetime = DatetimeMapperField(xpath='./aixm:timeSlice/aixm:RouteTimeSlice/aixm:featureLifetime/gml:TimePeriod/gml:endPosition')
+    identifier = XMLMapperField(xpath='./gml:identifier')
+    interpretation = XMLMapperField(xpath='./aixm:timeSlice/aixm:RouteTimeSlice/aixm:interpretation')
+    designator_prefix = XMLMapperField(xpath='./aixm:timeSlice/aixm:RouteTimeSlice/aixm:designatorPrefix')
+    designator_second_letter = XMLMapperField(xpath='./aixm:timeSlice/aixm:RouteTimeSlice/aixm:designatorSecondLetter')
+    designator_number = IntegerXMLMapperField(xpath='./aixm:timeSlice/aixm:RouteTimeSlice/aixm:designatorNumber',
+                                              strict=False)
+    type = XMLMapperField(xpath='./aixm:timeSlice/aixm:RouteTimeSlice/aixm:type')
+    begin_lifetime = DatetimeXMLMapperField(xpath='./aixm:timeSlice/aixm:RoutetTimeSlice/aixm:featureLifetime/gml:TimePeriod/gml:beginPosition')
+    end_lifetime = DatetimeXMLMapperField(xpath='./aixm:timeSlice/aixm:RouteTimeSlice/aixm:featureLifetime/gml:TimePeriod/gml:endPosition')
 
 
-class RouteSegmentMapper(Mapper):
+class RouteSegmentXMLMapper(XMLMapper):
 
     root_xpath = './adrmsg:hasMember/aixm:RouteSegment'
 
-    identifier = MapperField(xpath='./gml:identifier', post_map=remove_urn_uuid)
-    interpretation = MapperField(xpath='./aixm:timeSlice/aixm:RouteSegmentTimeSlice/aixm:interpretation')
-    start = MapperField(xpath='./aixm:timeSlice/aixm:RouteSegmentTimeSlice/aixm:start/aixm:EnRouteSegmentPoint/*[@xlink:href]/@xlink:href',
-                        post_map=remove_urn_uuid)
-    end = MapperField(xpath='./aixm:timeSlice/aixm:RouteSegmentTimeSlice/aixm:end/aixm:EnRouteSegmentPoint/*[@xlink:href]/@xlink:href',
-                      post_map=remove_urn_uuid)
-    upper_limit = IntegerMapperField(xpath='./aixm:timeSlice/aixm:RouteSegmentTimeSlice/aixm:upperLimit', strict=False)
-    upper_limit_uom = MapperField(xpath='./aixm:timeSlice/aixm:RouteSegmentTimeSlice/aixm:upperLimit/@uom')
-    upper_limit_ref = MapperField(xpath='./aixm:timeSlice/aixm:RouteSegmentTimeSlice/aixm:upperLimitReference')
-    lower_limit = IntegerMapperField(xpath='./aixm:timeSlice/aixm:RouteSegmentTimeSlice/aixm:lowerLimit', strict=False)
-    lower_limit_uom = MapperField(xpath='./aixm:timeSlice/aixm:RouteSegmentTimeSlice/aixm:lowerLimit/@uom')
-    lower_limit_ref = MapperField(xpath='./aixm:timeSlice/aixm:RouteSegmentTimeSlice/aixm:lowerLimitReference')
-    route_formed = MapperField(xpath='./aixm:timeSlice/aixm:RouteSegmentTimeSlice/aixm:routeFormed/@xlink:href',
-                               post_map=remove_urn_uuid)
-    begin_lifetime = DatetimeMapperField(xpath='./aixm:timeSlice/aixm:RouteSegmentTimeSlice/aixm:featureLifetime/gml:TimePeriod/gml:beginPosition')
-    end_lifetime = DatetimeMapperField(xpath='./aixm:timeSlice/aixm:RouteSegmentTimeSlice/aixm:featureLifetime/gml:TimePeriod/gml:endPosition')
+    identifier = XMLMapperField(xpath='./gml:identifier', post_map=remove_urn_uuid)
+    interpretation = XMLMapperField(xpath='./aixm:timeSlice/aixm:RouteSegmentTimeSlice/aixm:interpretation')
+    start = XMLMapperField(xpath='./aixm:timeSlice/aixm:RouteSegmentTimeSlice/aixm:start/aixm:EnRouteSegmentPoint/*[@xlink:href]/@xlink:href',
+                           post_map=remove_urn_uuid)
+    end = XMLMapperField(xpath='./aixm:timeSlice/aixm:RouteSegmentTimeSlice/aixm:end/aixm:EnRouteSegmentPoint/*[@xlink:href]/@xlink:href',
+                         post_map=remove_urn_uuid)
+    upper_limit = IntegerXMLMapperField(xpath='./aixm:timeSlice/aixm:RouteSegmentTimeSlice/aixm:upperLimit',
+                                        strict=False)
+    upper_limit_uom = XMLMapperField(xpath='./aixm:timeSlice/aixm:RouteSegmentTimeSlice/aixm:upperLimit/@uom')
+    upper_limit_ref = XMLMapperField(xpath='./aixm:timeSlice/aixm:RouteSegmentTimeSlice/aixm:upperLimitReference')
+    lower_limit = IntegerXMLMapperField(xpath='./aixm:timeSlice/aixm:RouteSegmentTimeSlice/aixm:lowerLimit',
+                                        strict=False)
+    lower_limit_uom = XMLMapperField(xpath='./aixm:timeSlice/aixm:RouteSegmentTimeSlice/aixm:lowerLimit/@uom')
+    lower_limit_ref = XMLMapperField(xpath='./aixm:timeSlice/aixm:RouteSegmentTimeSlice/aixm:lowerLimitReference')
+    route_formed = XMLMapperField(xpath='./aixm:timeSlice/aixm:RouteSegmentTimeSlice/aixm:routeFormed/@xlink:href',
+                                  post_map=remove_urn_uuid)
+    begin_lifetime = DatetimeXMLMapperField(xpath='./aixm:timeSlice/aixm:RouteSegmentTimeSlice/aixm:featureLifetime/gml:TimePeriod/gml:beginPosition')
+    end_lifetime = DatetimeXMLMapperField(xpath='./aixm:timeSlice/aixm:RouteSegmentTimeSlice/aixm:featureLifetime/gml:TimePeriod/gml:endPosition')
 

@@ -31,8 +31,8 @@ import datetime
 
 import pytest
 
-from swim_aim.data_mappers.xml_mappers import AirportHeliportMapper, NavaidMapper, DesignatedPointMapper, RouteMapper, \
-    RouteSegmentMapper
+from swim_aim.data_mappers.xml_mappers import AirportHeliportXMLMapper, NavaidXMLMapper, DesignatedPointXMLMapper, RouteXMLMapper, \
+    RouteSegmentXMLMapper
 from swim_aim.db.models import AirportHeliport, POINT_TYPE, Point, Route, RouteSegment
 from swim_aim.provision.converters import convert_to_airport_heliport, convert_to_point, convert_to_route, \
     convert_to_route_segment
@@ -42,7 +42,7 @@ __author__ = "EUROCONTROL (SWIM)"
 
 @pytest.mark.parametrize('mapper, expected_db_model', [
     (
-        AirportHeliportMapper(
+        AirportHeliportXMLMapper(
             identifier='2193b095-8bd7-40e4-ba10-2a5a3cf29901',
             interpretation='BASELINE',
             name="AUKI/GWAUNARU'U",
@@ -81,7 +81,7 @@ def test_convert_airport_heliport_mapper_to_airport_heliport_model(mapper, expec
 
 @pytest.mark.parametrize('mapper, expected_db_model', [
     (
-        NavaidMapper(
+        NavaidXMLMapper(
             identifier='9f9a0a70-cacb-4435-81b8-f99348371a9f',
             interpretation='BASELINE',
             name='AASIAAT',
@@ -117,7 +117,7 @@ def test_convert_navaid_mapper_to_point_model(mapper, expected_db_model):
 
 @pytest.mark.parametrize('mapper, expected_db_model', [
     (
-        DesignatedPointMapper(
+        DesignatedPointXMLMapper(
             identifier='2e71b1e5-735e-4f46-b986-52271dc22c7d',
             interpretation='BASELINE',
             name='10N030W',
@@ -153,7 +153,7 @@ def test_convert_designated_point_mapper_to_point_model(mapper, expected_db_mode
 
 @pytest.mark.parametrize('mapper, expected_db_model', [
     (
-        RouteMapper(
+        RouteXMLMapper(
             identifier='024bb6f8-3265-472a-9988-c765f519bcef',
             interpretation='BASELINE',
             designator_prefix=None,
@@ -181,36 +181,36 @@ def test_convert_route_mapper_to_route_model(mapper, expected_db_model):
 
 @pytest.mark.parametrize('mapper, expected_db_model', [
     (
-            RouteSegmentMapper(
-                identifier='5f7c0b50-b667-470e-953f-8ae479a5df3e',
-                interpretation='BASELINE',
-                start='ed74d8c5-91c6-4567-a95d-602cd48c19f4',
-                end='c80de58f-5a48-4308-9239-cf699429b4b0',
-                upper_limit=430,
-                upper_limit_uom='FL',
-                upper_limit_ref='STD',
-                lower_limit=265,
-                lower_limit_uom='FL',
-                lower_limit_ref='STD',
-                route_formed='024bb6f8-3265-472a-9988-c765f519bcef',
-                begin_lifetime=datetime.datetime(2018, 3, 29, 0, 0),
-                end_lifetime=None
-            ),
-            RouteSegment(
-                identifier='5f7c0b50-b667-470e-953f-8ae479a5df3e',
-                interpretation='BASELINE',
-                start='ed74d8c5-91c6-4567-a95d-602cd48c19f4',
-                end='c80de58f-5a48-4308-9239-cf699429b4b0',
-                route_formed='024bb6f8-3265-472a-9988-c765f519bcef',
-                upper_limit=430,
-                upper_limit_uom='FL',
-                upper_limit_ref='STD',
-                lower_limit=265,
-                lower_limit_uom='FL',
-                lower_limit_ref='STD',
-                begin_lifetime=datetime.datetime(2018, 3, 29, 0, 0),
-                end_lifetime=None
-            )
+        RouteSegmentXMLMapper(
+            identifier='5f7c0b50-b667-470e-953f-8ae479a5df3e',
+            interpretation='BASELINE',
+            start='ed74d8c5-91c6-4567-a95d-602cd48c19f4',
+            end='c80de58f-5a48-4308-9239-cf699429b4b0',
+            upper_limit=430,
+            upper_limit_uom='FL',
+            upper_limit_ref='STD',
+            lower_limit=265,
+            lower_limit_uom='FL',
+            lower_limit_ref='STD',
+            route_formed='024bb6f8-3265-472a-9988-c765f519bcef',
+            begin_lifetime=datetime.datetime(2018, 3, 29, 0, 0),
+            end_lifetime=None
+        ),
+        RouteSegment(
+            identifier='5f7c0b50-b667-470e-953f-8ae479a5df3e',
+            interpretation='BASELINE',
+            start='ed74d8c5-91c6-4567-a95d-602cd48c19f4',
+            end='c80de58f-5a48-4308-9239-cf699429b4b0',
+            route_formed='024bb6f8-3265-472a-9988-c765f519bcef',
+            upper_limit=430,
+            upper_limit_uom='FL',
+            upper_limit_ref='STD',
+            lower_limit=265,
+            lower_limit_uom='FL',
+            lower_limit_ref='STD',
+            begin_lifetime=datetime.datetime(2018, 3, 29, 0, 0),
+            end_lifetime=None
+        )
     )
 ])
 def test_convert_route_segment_mapper_to_route_segment_model(mapper, expected_db_model):

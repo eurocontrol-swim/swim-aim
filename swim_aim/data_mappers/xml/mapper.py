@@ -32,7 +32,7 @@ from typing import List, Type, Dict
 from lxml import etree
 
 from swim_aim.data_mappers.xml import MappedValueType, NAMESPACES
-from swim_aim.data_mappers.xml.mapper_fields import MapperField
+from swim_aim.data_mappers.xml.mapper_fields import XMLMapperField
 
 __author__ = "EUROCONTROL (SWIM)"
 
@@ -41,21 +41,21 @@ class MetaMapper(type):
 
     def __new__(mcs, name, bases, attrs):
         """
-        Makes checks on classes' definitions and updates the defined MapperField attributes of the class
+        Makes checks on classes' definitions and updates the defined XMLMapperField attributes of the class
 
         :param name: the name of the class to be created
         :param bases: the classes to inherit from
         :param attrs: the defined class attributes
-        :return: Mapper class
+        :return: XMLMapper class
         """
-        if name != 'Mapper':
+        if name != 'XMLMapper':
             if 'root_xpath' not in attrs.keys():
                 raise ValueError(f'root_xpath is missing from {name} class definition')
 
-            # supply all the classes that inherit from Mapper with the namespaces
+            # supply all the classes that inherit from XMLMapper with the namespaces
             mapper_fields = {}
             for attr_name, attr in attrs.items():
-                if isinstance(attr, MapperField):
+                if isinstance(attr, XMLMapperField):
                     attr.namespaces = NAMESPACES
                     mapper_fields[attr_name] = attr
             attrs['mapper_fields'] = mapper_fields
@@ -63,17 +63,17 @@ class MetaMapper(type):
         return type.__new__(mcs, name, bases, attrs)
 
 
-class Mapper(metaclass=MetaMapper):
+class XMLMapper(metaclass=MetaMapper):
 
     root_xpath = ''
 
     def __init__(self, **kwargs):
         """
-        When a mapper is simply instantiated all the defined MapperField attributes are initialized as None because they
+        When a mapper is simply instantiated all the defined XMLMapperField attributes are initialized as None because they
         are not mapped to any value yet, unless a value is provided via the constructor.
         """
         for attr, value in self.mapper_fields.items():
-            if isinstance(value, MapperField):
+            if isinstance(value, XMLMapperField):
                 self.__dict__[attr] = kwargs.get(attr)
 
     def __eq__(self, other) -> bool:
@@ -85,11 +85,11 @@ class Mapper(metaclass=MetaMapper):
     @classmethod
     def map(cls, element: etree.Element, instance=None):
         """
-        Map the provided XML element to the MapperField attributes of the class and returns a Mapper instance
+        Map the provided XML element to the XMLMapperField attributes of the class and returns a XMLMapper instance
 
         :param element: etree.Element
-        :param instance: an existing Mapper instance can also be used to remap its MapperField attributes
-        :return: Mapper
+        :param instance: an existing XMLMapper instance can also be used to remap its XMLMapperField attributes
+        :return: XMLMapper
         """
         instance = instance or cls()
 
@@ -103,9 +103,9 @@ class Mapper(metaclass=MetaMapper):
                 if key in self.mapper_fields}
 
 
-def xml_map(file_path: str, mapper_class: Type[Mapper]) -> List[Type[Mapper]]:
+def xml_map(file_path: str, mapper_class: Type[XMLMapper]) -> List[Type[XMLMapper]]:
     """
-    Parses a XML file and maps its element(s) to Mapper instance(s)
+    Parses a XML file and maps its element(s) to XMLMapper instance(s)
 
     :param file_path: the path of the XML file
     :param mapper_class:

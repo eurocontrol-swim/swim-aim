@@ -34,8 +34,8 @@ import pytest
 from lxml import etree
 
 from swim_aim.data_mappers.xml import NAMESPACES
-from swim_aim.data_mappers.xml.mapper_fields import MapperField, DatetimeMapperField, FloatMapperField, \
-    IntegerMapperField
+from swim_aim.data_mappers.xml.mapper_fields import XMLMapperField, DatetimeXMLMapperField, FloatXMLMapperField, \
+    IntegerXMLMapperField
 
 __author__ = "EUROCONTROL (SWIM)"
 
@@ -45,43 +45,43 @@ __author__ = "EUROCONTROL (SWIM)"
 ])
 def test_mapper_field__xpath_not_separated_by_slashes__raises_valueerror(xpath):
     with pytest.raises(ValueError) as e:
-        MapperField(xpath)
+        XMLMapperField(xpath)
         assert 'Invalid xpath' == str(e.value)
 
 
-@mock.patch.object(MapperField, '_get_value', return_value=None)
+@mock.patch.object(XMLMapperField, '_get_value', return_value=None)
 def test_integer_mapper_field__invalid_value__raises_on_strict_mode(mock_mapper_field):
-    imf = IntegerMapperField('./some/xpath', strict=True)
+    imf = IntegerXMLMapperField('./some/xpath', strict=True)
 
     with pytest.raises(TypeError) as e:
         imf.from_xml(mock.Mock())
 
 
-@mock.patch.object(MapperField, '_get_value', return_value='some_value')
+@mock.patch.object(XMLMapperField, '_get_value', return_value='some_value')
 def test_integer_mapper_field__returns_value_on_strict_mode_false(mock_mapper_field):
-    imf = IntegerMapperField('./some/xpath', strict=False)
+    imf = IntegerXMLMapperField('./some/xpath', strict=False)
 
     assert 'some_value' == imf.from_xml(mock.Mock())
 
 
-@mock.patch.object(MapperField, '_get_value', return_value=None)
+@mock.patch.object(XMLMapperField, '_get_value', return_value=None)
 def test_float_mapper_field__invalid_value__raises_on_strict_mode(mock_mapper_field):
-    fmf = FloatMapperField('./some/xpath', strict=True)
+    fmf = FloatXMLMapperField('./some/xpath', strict=True)
 
     with pytest.raises(TypeError) as e:
         fmf.from_xml(mock.Mock())
 
 
-@mock.patch.object(MapperField, '_get_value', return_value='some_value')
+@mock.patch.object(XMLMapperField, '_get_value', return_value='some_value')
 def test_float_mapper_field__returns_value_on_strict_mode_false(mock_mapper_field):
-    imf = FloatMapperField('./some/xpath', strict=False)
+    imf = FloatXMLMapperField('./some/xpath', strict=False)
 
     assert 'some_value' == imf.from_xml(mock.Mock())
 
 
-@mock.patch.object(MapperField, '_get_value', return_value=None)
+@mock.patch.object(XMLMapperField, '_get_value', return_value=None)
 def test_datetime_mapper_field__mapped_value_is_none__returns_none(mock_mapper_field):
-    dmf = DatetimeMapperField('./some/xpath', strict=True)
+    dmf = DatetimeXMLMapperField('./some/xpath', strict=True)
 
     assert dmf.from_xml(mock.Mock()) is None
 
@@ -98,7 +98,7 @@ def test_datetime_mapper_field__mapped_value_is_none__returns_none(mock_mapper_f
         </adrmsg:ADRMessage>
         """.encode('utf-8'),
         './gml:identifier',
-        MapperField,
+        XMLMapperField,
         '2193b095-8bd7-40e4-ba10-2a5a3cf29901'
     ),
     (
@@ -121,7 +121,7 @@ def test_datetime_mapper_field__mapped_value_is_none__returns_none(mock_mapper_f
         </adrmsg:ADRMessage>
         """.encode('utf-8'),
         './aixm:timeSlice/aixm:AirportHeliportTimeSlice/aixm:featureLifetime/gml:TimePeriod/gml:beginPosition',
-        DatetimeMapperField,
+        DatetimeXMLMapperField,
         datetime(2013, 11, 14, 0, 0, 0)
     ),
     (
@@ -144,7 +144,7 @@ def test_datetime_mapper_field__mapped_value_is_none__returns_none(mock_mapper_f
         </adrmsg:ADRMessage>
         """.encode('utf-8'),
         './aixm:timeSlice/aixm:AirportHeliportTimeSlice/aixm:ARP/aixm:ElevatedPoint/aixm:elevation',
-        FloatMapperField,
+        FloatXMLMapperField,
         100.5
     ),
     (
@@ -167,7 +167,7 @@ def test_datetime_mapper_field__mapped_value_is_none__returns_none(mock_mapper_f
         </adrmsg:ADRMessage>
         """.encode('utf-8'),
         './aixm:timeSlice/aixm:AirportHeliportTimeSlice/aixm:ARP/aixm:ElevatedPoint/aixm:elevation',
-        IntegerMapperField,
+        IntegerXMLMapperField,
         100
     ),
     (
@@ -190,7 +190,7 @@ def test_datetime_mapper_field__mapped_value_is_none__returns_none(mock_mapper_f
         </adrmsg:ADRMessage>
         """.encode('utf-8'),
         './aixm:timeSlice/aixm:AirportHeliportTimeSlice/aixm:ARP/aixm:ElevatedPoint/aixm:elevation/@uom',
-        MapperField,
+        XMLMapperField,
         'FT'
     )
 ])
@@ -225,7 +225,7 @@ def test_mapper_field__from_xml_returns_the_correct_value(xml_string, xpath, map
             </adrmsg:ADRMessage>
         """.encode('utf-8'),
         './aixm:timeSlice/aixm:RouteSegmentTimeSlice/aixm:start/aixm:EnRouteSegmentPoint/*[@xlink:href]/@xlink:href',
-        MapperField,
+        XMLMapperField,
         'urn:uuid:ed74d8c5-91c6-4567-a95d-602cd48c19f4'
     )
 ])
@@ -259,7 +259,7 @@ def test_mapper_field__maps_attribute_with_namespace(xml_string, xpath, mapper_f
             </adrmsg:ADRMessage>
         """.encode('utf-8'),
         './aixm:timeSlice/aixm:RouteSegmentTimeSlice/aixm:start/aixm:EnRouteSegmentPoint/*[@xlink:href]/@xlink:href',
-        MapperField,
+        XMLMapperField,
         'ed74d8c5-91c6-4567-a95d-602cd48c19f4'
     )
 ])

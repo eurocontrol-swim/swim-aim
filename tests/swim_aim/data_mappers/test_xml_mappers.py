@@ -33,8 +33,8 @@ import os
 import pytest
 
 from swim_aim.data_mappers.xml.mapper import xml_map
-from swim_aim.data_mappers.xml_mappers import AirportHeliportMapper, DesignatedPointMapper, NavaidMapper, RouteMapper, \
-    RouteSegmentMapper, remove_urn_uuid
+from swim_aim.data_mappers.xml_mappers import AirportHeliportXMLMapper, DesignatedPointXMLMapper, NavaidXMLMapper, RouteXMLMapper, \
+    RouteSegmentXMLMapper, remove_urn_uuid
 
 __author__ = "EUROCONTROL (SWIM)"
 
@@ -50,8 +50,8 @@ def test_remove_urn_uuid(string, expected_string):
 @pytest.mark.parametrize('xml_path, mapper_class, expected_mapper', [
     (
         'static/AirportHeliport.xml',
-        AirportHeliportMapper,
-        AirportHeliportMapper(
+        AirportHeliportXMLMapper,
+        AirportHeliportXMLMapper(
             identifier='2193b095-8bd7-40e4-ba10-2a5a3cf29901',
             interpretation='BASELINE',
             name="AUKI/GWAUNARU'U",
@@ -69,8 +69,8 @@ def test_remove_urn_uuid(string, expected_string):
     ),
     (
         'static/DesignatedPoint.xml',
-        DesignatedPointMapper,
-        DesignatedPointMapper(
+        DesignatedPointXMLMapper,
+        DesignatedPointXMLMapper(
             identifier='2e71b1e5-735e-4f46-b986-52271dc22c7d',
             interpretation='BASELINE',
             name='10N030W',
@@ -86,8 +86,8 @@ def test_remove_urn_uuid(string, expected_string):
     ),
     (
         'static/Navaid.xml',
-        NavaidMapper,
-        NavaidMapper(
+        NavaidXMLMapper,
+        NavaidXMLMapper(
             identifier='9f9a0a70-cacb-4435-81b8-f99348371a9f',
             interpretation='BASELINE',
             name='AASIAAT',
@@ -103,8 +103,8 @@ def test_remove_urn_uuid(string, expected_string):
     ),
     (
         'static/Route.xml',
-        RouteMapper,
-        RouteMapper(
+        RouteXMLMapper,
+        RouteXMLMapper(
             identifier='024bb6f8-3265-472a-9988-c765f519bcef',
             interpretation='BASELINE',
             designator_prefix=None,
@@ -117,8 +117,8 @@ def test_remove_urn_uuid(string, expected_string):
     ),
     (
         'static/RouteSegment.xml',
-        RouteSegmentMapper,
-        RouteSegmentMapper(
+        RouteSegmentXMLMapper,
+        RouteSegmentXMLMapper(
             identifier='5f7c0b50-b667-470e-953f-8ae479a5df3e',
             interpretation='BASELINE',
             start='ed74d8c5-91c6-4567-a95d-602cd48c19f4',
@@ -144,7 +144,7 @@ def test_airport_heliport_mapper(xml_path, mapper_class, expected_mapper):
 
 @pytest.mark.parametrize('mapper, expected_dict', [
     (
-        AirportHeliportMapper(
+        AirportHeliportXMLMapper(
             identifier='2193b095-8bd7-40e4-ba10-2a5a3cf29901',
             interpretation='BASELINE',
             name="AUKI/GWAUNARU'U",
@@ -176,7 +176,7 @@ def test_airport_heliport_mapper(xml_path, mapper_class, expected_mapper):
         }
     ),
     (
-        DesignatedPointMapper(
+        DesignatedPointXMLMapper(
             identifier='2e71b1e5-735e-4f46-b986-52271dc22c7d',
             interpretation='BASELINE',
             name='10N030W',
@@ -204,7 +204,7 @@ def test_airport_heliport_mapper(xml_path, mapper_class, expected_mapper):
         }
     ),
     (
-        NavaidMapper(
+        NavaidXMLMapper(
             identifier='9f9a0a70-cacb-4435-81b8-f99348371a9f',
             interpretation='BASELINE',
             name='AASIAAT',
@@ -232,7 +232,7 @@ def test_airport_heliport_mapper(xml_path, mapper_class, expected_mapper):
         }
     ),
     (
-        RouteMapper(
+        RouteXMLMapper(
             identifier='024bb6f8-3265-472a-9988-c765f519bcef',
             interpretation='BASELINE',
             designator_prefix=None,
@@ -254,7 +254,7 @@ def test_airport_heliport_mapper(xml_path, mapper_class, expected_mapper):
         }
     ),
     (
-        RouteSegmentMapper(
+        RouteSegmentXMLMapper(
             identifier='5f7c0b50-b667-470e-953f-8ae479a5df3e',
             interpretation='BASELINE',
             start='ed74d8c5-91c6-4567-a95d-602cd48c19f4',

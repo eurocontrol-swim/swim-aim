@@ -32,62 +32,62 @@ from unittest import mock
 
 import pytest
 
-from swim_aim.data_mappers.xml.mapper import Mapper, xml_map
-from swim_aim.data_mappers.xml.mapper_fields import MapperField
-from swim_aim.data_mappers.xml_mappers import AirportHeliportMapper
+from swim_aim.data_mappers.xml.mapper import XMLMapper, xml_map
+from swim_aim.data_mappers.xml.mapper_fields import XMLMapperField
+from swim_aim.data_mappers.xml_mappers import AirportHeliportXMLMapper
 
 __author__ = "EUROCONTROL (SWIM)"
 
 
 def test_mapper_class_definition__root_xpath_is_missing__raises_value_error():
     with pytest.raises(ValueError) as e:
-        class MyMapper(Mapper):
+        class MyXMLMapper(XMLMapper):
             pass
-        assert f'root_xpath is missing from {MyMapper.__name__} class definition' == str(e.value)
+        assert f'root_xpath is missing from {MyXMLMapper.__name__} class definition' == str(e.value)
 
 
 def test_mapper_class_instantiation__instance_has_all_the_mapper_fields_assigned_as_none():
-    class MyMapper(Mapper):
+    class MyXMLMapper(XMLMapper):
         root_xpath = 'path'
 
-        field1 = MapperField(xpath='./xpath')
-        field2 = MapperField(xpath='./xpath')
-        field3 = MapperField(xpath='./xpath')
+        field1 = XMLMapperField(xpath='./xpath')
+        field2 = XMLMapperField(xpath='./xpath')
+        field3 = XMLMapperField(xpath='./xpath')
 
-    my_mapper = MyMapper()
+    my_mapper = MyXMLMapper()
     assert my_mapper.field1 is None
     assert my_mapper.field2 is None
     assert my_mapper.field3 is None
 
 
-@mock.patch.object(MapperField, 'from_xml', return_value='value')
+@mock.patch.object(XMLMapperField, 'from_xml', return_value='value')
 def test_mapper__map_returns_instance_with_mapped_values_on_the_mapped_fields(mock_from_xml):
 
-    class MyMapper(Mapper):
+    class MyXMLMapper(XMLMapper):
         root_xpath = 'path'
 
-        field1 = MapperField(xpath='./xpath')
-        field2 = MapperField(xpath='./xpath')
-        field3 = MapperField(xpath='./xpath')
+        field1 = XMLMapperField(xpath='./xpath')
+        field2 = XMLMapperField(xpath='./xpath')
+        field3 = XMLMapperField(xpath='./xpath')
 
-    my_mapper = MyMapper.map(mock.Mock())
+    my_mapper = MyXMLMapper.map(mock.Mock())
 
     assert 'value' == my_mapper.field1
     assert 'value' == my_mapper.field2
     assert 'value' == my_mapper.field3
 
 
-@mock.patch.object(MapperField, 'from_xml', return_value='value')
+@mock.patch.object(XMLMapperField, 'from_xml', return_value='value')
 def test_mapper__from_dict(mock_from_xml):
 
-    class MyMapper(Mapper):
+    class MyXMLMapper(XMLMapper):
         root_xpath = 'path'
 
-        field1 = MapperField(xpath='./xpath')
-        field2 = MapperField(xpath='./xpath')
-        field3 = MapperField(xpath='./xpath')
+        field1 = XMLMapperField(xpath='./xpath')
+        field2 = XMLMapperField(xpath='./xpath')
+        field3 = XMLMapperField(xpath='./xpath')
 
-    my_mapper = MyMapper.map(mock.Mock())
+    my_mapper = MyXMLMapper.map(mock.Mock())
 
     assert {
         'field1': 'value',
@@ -99,7 +99,7 @@ def test_mapper__from_dict(mock_from_xml):
 def test_xml_map__returns_list_of_mapper_instances_of_the_provided_class():
     path = os.path.dirname(os.path.abspath(__file__))
     xml_path = os.path.join(path, '../static/AirportHeliport.xml')
-    mappers = xml_map(xml_path, AirportHeliportMapper)
+    mappers = xml_map(xml_path, AirportHeliportXMLMapper)
 
     assert isinstance(mappers, list)
-    assert all([isinstance(mapper, AirportHeliportMapper) for mapper in mappers])
+    assert all([isinstance(mapper, AirportHeliportXMLMapper) for mapper in mappers])

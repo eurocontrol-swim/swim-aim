@@ -37,7 +37,7 @@ from swim_aim.data_mappers.xml import MappedValueType
 __author__ = "EUROCONTROL (SWIM)"
 
 
-class MapperField:
+class XMLMapperField:
 
     def __init__(self,
                  xpath: str,
@@ -115,7 +115,7 @@ class MapperField:
         return value
 
 
-class IntegerMapperField(MapperField):
+class IntegerXMLMapperField(XMLMapperField):
 
     def _get_value(self, element: etree.Element) -> Union[int, str, None]:
         """
@@ -134,7 +134,7 @@ class IntegerMapperField(MapperField):
             return value
 
 
-class FloatMapperField(MapperField):
+class FloatXMLMapperField(XMLMapperField):
 
     def _get_value(self, element: etree.Element) -> Union[float, str, None]:
         """
@@ -154,7 +154,7 @@ class FloatMapperField(MapperField):
             return value
 
 
-class DatetimeMapperField(MapperField):
+class DatetimeXMLMapperField(XMLMapperField):
 
     def __init__(self, xpath: str, str_format: str = '%Y-%m-%dT%H:%M:%S', **kwargs) -> None:
         """
