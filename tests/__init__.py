@@ -27,5 +27,8 @@ http://opensource.org/licenses/BSD-3-Clause
 
 Details on EUROCONTROL: http://www.eurocontrol.int
 """
+import os
 
 __author__ = "EUROCONTROL (SWIM)"
+
+TEST_DIR = os.path.dirname(os.path.abspath(__file__))

@@ -31,8 +31,7 @@ import pytest
 
 from swim_backend.db import db_save
 from swim_aim.db.models import Route
-from swim_aim.db.routes import get_route_by_id, get_routes, create_route, \
-    update_route, delete_route
+from swim_aim.db.routes import get_route_by_id, get_routes, create_route, update_route, delete_route
 from tests.swim_aim.db.utils import make_route
 
 __author__ = "EUROCONTROL (SWIM)"

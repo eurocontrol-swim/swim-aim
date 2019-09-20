@@ -29,11 +29,11 @@ Details on EUROCONTROL: http://www.eurocontrol.int
 """
 from typing import Dict, Union
 
-from swim_aim.data_mappers.xml import MappedValueType
-from swim_aim.data_mappers.xml_mappers import AirportHeliportXMLMapper, DesignatedPointXMLMapper, NavaidXMLMapper, RouteXMLMapper, \
-    RouteSegmentXMLMapper
+from swim_xml import MappedValueType
+from swim_aim.data_mappers.xml_mappers import AirportHeliportXMLMapper, DesignatedPointXMLMapper, NavaidXMLMapper, \
+    RouteXMLMapper, RouteSegmentXMLMapper
 from swim_aim.db.models import AirportHeliport, Point, Route, RouteSegment, POINT_TYPE
-from swim_aim.provision.utils import string_to_coordinates
+from swim_aim.data_mappers.utils import string_to_coordinates
 
 __author__ = "EUROCONTROL (SWIM)"
 
@@ -46,7 +46,7 @@ def handle_position(mapper_dict: Dict[str, MappedValueType]) -> Dict[str, Mapped
     return mapper_dict
 
 
-def convert_to_airport_heliport(airport_heliport_mapper: AirportHeliportXMLMapper) -> AirportHeliport:
+def map_from_airport_heliport_xml_mapper(airport_heliport_mapper: AirportHeliportXMLMapper) -> AirportHeliport:
     airport_heliport_mapper_dict = airport_heliport_mapper.to_dict()
 
     airport_heliport_mapper_dict = handle_position(airport_heliport_mapper_dict)
@@ -54,7 +54,7 @@ def convert_to_airport_heliport(airport_heliport_mapper: AirportHeliportXMLMappe
     return AirportHeliport(**airport_heliport_mapper_dict)
 
 
-def convert_to_point(point_mapper: Union[NavaidXMLMapper, DesignatedPointXMLMapper]) -> Point:
+def map_from_point_xml_mapper(point_mapper: Union[NavaidXMLMapper, DesignatedPointXMLMapper]) -> Point:
     point_mapper_dict = point_mapper.to_dict()
 
     point_mapper_dict = handle_position(point_mapper_dict)
@@ -68,9 +68,9 @@ def convert_to_point(point_mapper: Union[NavaidXMLMapper, DesignatedPointXMLMapp
     return Point(**point_mapper_dict)
 
 
-def convert_to_route(route_mapper: RouteXMLMapper) -> Route:
+def map_from_route_xml_mapper(route_mapper: RouteXMLMapper) -> Route:
     return Route(**route_mapper.to_dict())
 
 
-def convert_to_route_segment(route_segment_mapper: RouteSegmentXMLMapper) -> RouteSegment:
+def map_from_route_segment_xml_mapper(route_segment_mapper: RouteSegmentXMLMapper) -> RouteSegment:
     return RouteSegment(**route_segment_mapper.to_dict())

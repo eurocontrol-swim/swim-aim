@@ -31,8 +31,7 @@ import pytest
 
 from swim_backend.db import db_save
 from swim_aim.db.models import Point, POINT_TYPE
-from swim_aim.db.points import get_point_by_id, get_points, create_point, \
-    update_point, delete_point
+from swim_aim.db.points import get_point_by_id, get_points, create_point, update_point, delete_point
 from tests.swim_aim.db.utils import make_point
 
 __author__ = "EUROCONTROL (SWIM)"

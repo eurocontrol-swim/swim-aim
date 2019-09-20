@@ -31,11 +31,11 @@ import datetime
 
 import pytest
 
-from swim_aim.data_mappers.xml_mappers import AirportHeliportXMLMapper, NavaidXMLMapper, DesignatedPointXMLMapper, RouteXMLMapper, \
-    RouteSegmentXMLMapper
+from swim_aim.data_mappers.xml_mappers import AirportHeliportXMLMapper, NavaidXMLMapper, DesignatedPointXMLMapper, \
+    RouteXMLMapper, RouteSegmentXMLMapper
 from swim_aim.db.models import AirportHeliport, POINT_TYPE, Point, Route, RouteSegment
-from swim_aim.provision.converters import convert_to_airport_heliport, convert_to_point, convert_to_route, \
-    convert_to_route_segment
+from swim_aim.data_mappers.db_mappers import map_from_airport_heliport_xml_mapper, map_from_point_xml_mapper, \
+    map_from_route_xml_mapper, map_from_route_segment_xml_mapper
 
 __author__ = "EUROCONTROL (SWIM)"
 
@@ -76,7 +76,7 @@ __author__ = "EUROCONTROL (SWIM)"
     )
 ])
 def test_convert_airport_heliport_mapper_to_airport_heliport_model(mapper, expected_db_model):
-    assert expected_db_model == convert_to_airport_heliport(mapper)
+    assert expected_db_model == map_from_airport_heliport_xml_mapper(mapper)
 
 
 @pytest.mark.parametrize('mapper, expected_db_model', [
@@ -112,7 +112,7 @@ def test_convert_airport_heliport_mapper_to_airport_heliport_model(mapper, expec
     )
 ])
 def test_convert_navaid_mapper_to_point_model(mapper, expected_db_model):
-    assert expected_db_model == convert_to_point(mapper)
+    assert expected_db_model == map_from_point_xml_mapper(mapper)
 
 
 @pytest.mark.parametrize('mapper, expected_db_model', [
@@ -148,7 +148,7 @@ def test_convert_navaid_mapper_to_point_model(mapper, expected_db_model):
     )
 ])
 def test_convert_designated_point_mapper_to_point_model(mapper, expected_db_model):
-    assert expected_db_model == convert_to_point(mapper)
+    assert expected_db_model == map_from_point_xml_mapper(mapper)
 
 
 @pytest.mark.parametrize('mapper, expected_db_model', [
@@ -176,7 +176,7 @@ def test_convert_designated_point_mapper_to_point_model(mapper, expected_db_mode
     )
 ])
 def test_convert_route_mapper_to_route_model(mapper, expected_db_model):
-    assert expected_db_model == convert_to_route(mapper)
+    assert expected_db_model == map_from_route_xml_mapper(mapper)
 
 
 @pytest.mark.parametrize('mapper, expected_db_model', [
@@ -214,5 +214,5 @@ def test_convert_route_mapper_to_route_model(mapper, expected_db_model):
     )
 ])
 def test_convert_route_segment_mapper_to_route_segment_model(mapper, expected_db_model):
-    assert expected_db_model == convert_to_route_segment(mapper)
+    assert expected_db_model == map_from_route_segment_xml_mapper(mapper)
 

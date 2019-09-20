@@ -35,8 +35,6 @@ from pkg_resources import resource_filename
 from swim_aim.app import create_app
 from swim_backend.db import db as _db
 
-DEFAULT_LOGIN_PASSWORD = 'password'
-
 
 @pytest.yield_fixture(scope='session')
 def app():
@@ -80,3 +78,4 @@ def session(db):
     transaction.rollback()
     connection.close()
     session_.remove()
+

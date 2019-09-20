@@ -32,9 +32,10 @@ from unittest import mock
 
 import pytest
 
-from swim_aim.data_mappers.xml.mapper import XMLMapper, xml_map
-from swim_aim.data_mappers.xml.mapper_fields import XMLMapperField
+from swim_xml.mapper import XMLMapper, xml_map
+from swim_xml.mapper_fields import XMLMapperField
 from swim_aim.data_mappers.xml_mappers import AirportHeliportXMLMapper
+from tests import TEST_DIR
 
 __author__ = "EUROCONTROL (SWIM)"
 
@@ -97,8 +98,7 @@ def test_mapper__from_dict(mock_from_xml):
 
 
 def test_xml_map__returns_list_of_mapper_instances_of_the_provided_class():
-    path = os.path.dirname(os.path.abspath(__file__))
-    xml_path = os.path.join(path, '../static/AirportHeliport.xml')
+    xml_path = os.path.join(TEST_DIR, 'static/AirportHeliport.xml')
     mappers = xml_map(xml_path, AirportHeliportXMLMapper)
 
     assert isinstance(mappers, list)

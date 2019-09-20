@@ -29,7 +29,7 @@ Details on EUROCONTROL: http://www.eurocontrol.int
 """
 import pytest
 
-from swim_aim.provision.utils import string_to_coordinates
+from swim_aim.data_mappers.utils import string_to_coordinates
 
 __author__ = "EUROCONTROL (SWIM)"
 

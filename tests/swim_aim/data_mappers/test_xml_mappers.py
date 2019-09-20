@@ -32,9 +32,10 @@ import os
 
 import pytest
 
-from swim_aim.data_mappers.xml.mapper import xml_map
-from swim_aim.data_mappers.xml_mappers import AirportHeliportXMLMapper, DesignatedPointXMLMapper, NavaidXMLMapper, RouteXMLMapper, \
+from swim_xml.mapper import xml_map
+from swim_aim.data_mappers.xml_mappers import AirportHeliportXMLMapper, DesignatedPointXMLMapper, NavaidXMLMapper, \
     RouteSegmentXMLMapper, remove_urn_uuid
+from tests import TEST_DIR
 
 __author__ = "EUROCONTROL (SWIM)"
 
@@ -135,9 +136,8 @@ def test_remove_urn_uuid(string, expected_string):
         )
     )
 ])
-def test_airport_heliport_mapper(xml_path, mapper_class, expected_mapper):
-    path = os.path.dirname(os.path.abspath(__file__))
-    xml_path = os.path.join(path, xml_path)
+def test_mapper(xml_path, mapper_class, expected_mapper):
+    xml_path = os.path.join(TEST_DIR, xml_path)
 
     assert [expected_mapper] == xml_map(xml_path, mapper_class)
 

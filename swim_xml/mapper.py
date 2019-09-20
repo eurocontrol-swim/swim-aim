@@ -31,8 +31,8 @@ from typing import List, Type, Dict
 
 from lxml import etree
 
-from swim_aim.data_mappers.xml import MappedValueType, NAMESPACES
-from swim_aim.data_mappers.xml.mapper_fields import XMLMapperField
+from swim_xml import MappedValueType, NAMESPACES
+from swim_xml.mapper_fields import XMLMapperField
 
 __author__ = "EUROCONTROL (SWIM)"
 
