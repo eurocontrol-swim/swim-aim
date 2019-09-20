@@ -32,7 +32,7 @@ from typing import Optional, Callable, Dict, Union
 
 from lxml import etree
 
-from swim_aim.xml import MappedValueType
+from swim_aim.data_mappers.xml import MappedValueType
 
 __author__ = "EUROCONTROL (SWIM)"
 

@@ -32,9 +32,9 @@ from unittest import mock
 
 import pytest
 
-from swim_aim.xml.mapper import Mapper, xml_map
-from swim_aim.xml.mapper_fields import MapperField
-from swim_aim.xml_mappers import AirportHeliportMapper
+from swim_aim.data_mappers.xml.mapper import Mapper, xml_map
+from swim_aim.data_mappers.xml.mapper_fields import MapperField
+from swim_aim.data_mappers.xml_mappers import AirportHeliportMapper
 
 __author__ = "EUROCONTROL (SWIM)"
 

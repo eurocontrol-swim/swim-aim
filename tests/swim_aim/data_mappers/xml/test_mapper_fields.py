@@ -33,8 +33,9 @@ from unittest import mock
 import pytest
 from lxml import etree
 
-from swim_aim.xml import NAMESPACES
-from swim_aim.xml.mapper_fields import MapperField, DatetimeMapperField, FloatMapperField, IntegerMapperField
+from swim_aim.data_mappers.xml import NAMESPACES
+from swim_aim.data_mappers.xml.mapper_fields import MapperField, DatetimeMapperField, FloatMapperField, \
+    IntegerMapperField
 
 __author__ = "EUROCONTROL (SWIM)"
 
@@ -262,7 +263,8 @@ def test_mapper_field__maps_attribute_with_namespace(xml_string, xpath, mapper_f
         'ed74d8c5-91c6-4567-a95d-602cd48c19f4'
     )
 ])
-def test_mapper_field__maps_attribute_with_namespace_with_post_map(xml_string, xpath, mapper_field_class, expected_mapped_value):
+def test_mapper_field__maps_attribute_with_namespace_with_post_map(xml_string, xpath, mapper_field_class,
+                                                                   expected_mapped_value):
     xml = etree.fromstring(xml_string)
     element = xml.find('./adrmsg:hasMember/aixm:RouteSegment', NAMESPACES)
 

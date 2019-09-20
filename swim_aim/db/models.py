@@ -34,7 +34,19 @@ from swim_backend.db import db
 __author__ = "EUROCONTROL (SWIM)"
 
 
-class AirportHeliport(db.Model):
+class BaseModel(db.Model):
+    __abstract__ = True
+
+    def __eq__(self, other) -> bool:
+        return isinstance(other, self.__class__) and \
+               self._sa_instance_state.mapper.all_orm_descriptors.__dict__ == \
+            other._sa_instance_state.mapper.all_orm_descriptors.__dict__
+
+    def __ne__(self, other) -> bool:
+        return not other == self
+
+
+class AirportHeliport(BaseModel):
 
     __tablename__ = 'airport_heliports'
 
@@ -60,7 +72,7 @@ class POINT_TYPE(enum.Enum):
     DESIGNATED_POINT = "DESIGNATED_POINT"
 
 
-class Point(db.Model):
+class Point(BaseModel):
 
     __tablename__ = 'points'
 
@@ -68,7 +80,7 @@ class Point(db.Model):
 
     interpretation = db.Column(db.String, nullable=False)
     name = db.Column(db.String, nullable=False)
-    designator = db.Column(db.String, nullable=False)
+    designator = db.Column(db.String)
     type = db.Column(db.String, nullable=False)
     latitude = db.Column(db.Float)
     longitude = db.Column(db.Float)
@@ -80,7 +92,7 @@ class Point(db.Model):
     point_type = db.Column(db.Enum(POINT_TYPE), nullable=False)
 
 
-class Route(db.Model):
+class Route(BaseModel):
 
     __tablename__ = 'routes'
 
@@ -97,7 +109,7 @@ class Route(db.Model):
     segments = db.relationship("RouteSegment", back_populates="route")
 
 
-class RouteSegment(db.Model):
+class RouteSegment(BaseModel):
 
     __tablename__ = 'route_segments'
 

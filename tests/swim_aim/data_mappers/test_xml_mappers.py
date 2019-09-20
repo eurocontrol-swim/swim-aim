@@ -32,8 +32,8 @@ import os
 
 import pytest
 
-from swim_aim.xml.mapper import xml_map
-from swim_aim.xml_mappers import AirportHeliportMapper, DesignatedPointMapper, NavaidMapper, RouteMapper, \
+from swim_aim.data_mappers.xml.mapper import xml_map
+from swim_aim.data_mappers.xml_mappers import AirportHeliportMapper, DesignatedPointMapper, NavaidMapper, RouteMapper, \
     RouteSegmentMapper, remove_urn_uuid
 
 __author__ = "EUROCONTROL (SWIM)"
@@ -167,13 +167,12 @@ def test_airport_heliport_mapper(xml_path, mapper_class, expected_mapper):
             'iata_designator': 'AKS',
             'type': 'OTHER',
             'control_type': 'CIVIL',
+            'position': '-8.698333333333334 160.67833333333334',
             'srs_name': 'urn:ogc:def:crs:EPSG::4326',
             'elevation': 0.0,
             'elevation_uom': 'FT',
             'begin_lifetime': datetime.datetime(2013, 11, 14, 0, 0),
             'end_lifetime': None,
-            'longitude': -8.698333333333334,
-            'latitude': 160.67833333333334
         }
     ),
     (
@@ -196,13 +195,12 @@ def test_airport_heliport_mapper(xml_path, mapper_class, expected_mapper):
             'name': '10N030W',
             'designator': None,
             'type': 'COORD',
+            'position': '10.0 -30.0',
             'srs_name': 'urn:ogc:def:crs:EPSG::4326',
             'elevation': None,
             'elevation_uom': None,
             'begin_lifetime': datetime.datetime(2006, 6, 8, 0, 0),
-            'end_lifetime': None,
-            'longitude': 10.0,
-            'latitude': -30.0
+            'end_lifetime': None
         }
     ),
     (
@@ -225,13 +223,12 @@ def test_airport_heliport_mapper(xml_path, mapper_class, expected_mapper):
             'name': 'AASIAAT',
             'designator': 'AA',
             'type': 'NDB_MKR',
+            'position': '68.72305555555556 -52.78472222222222',
             'srs_name': 'urn:ogc:def:crs:EPSG::4326',
             'elevation': None,
             'elevation_uom': None,
             'begin_lifetime': datetime.datetime(2010, 4, 8, 0, 0),
             'end_lifetime': None,
-            'longitude': 68.72305555555556,
-            'latitude': -52.78472222222222
         }
     ),
     (
