@@ -27,50 +27,33 @@ http://opensource.org/licenses/BSD-3-Clause
 
 Details on EUROCONTROL: http://www.eurocontrol.int
 """
-from typing import Dict, Union
+import io
+import os
+from typing import Tuple
+from zipfile import ZipFile
 
-from swim_xml import MappedValueType
-from swim_aim.data_mappers.xml_mappers import AirportHeliportXMLMapper, DesignatedPointXMLMapper, NavaidXMLMapper, \
-    RouteXMLMapper, RouteSegmentXMLMapper
-import swim_aim.db.models as db
-from swim_aim.data_mappers.utils import string_to_coordinates
+from requests import Session
 
 __author__ = "EUROCONTROL (SWIM)"
 
 
-def _handle_position(mapper_dict: Dict[str, MappedValueType]) -> Dict[str, MappedValueType]:
-    mapper_dict['latitude'], mapper_dict['longitude'] = string_to_coordinates(mapper_dict['position'])
+class AIMFileDownloadClient:
 
-    del mapper_dict['position']
+    def __init__(self, cert: Tuple[str, str]) -> None:
+        self._host = 'https://www.b2b.preops.nm.eurocontrol.int:443/FILE_PREOPS/gateway/spec/'
+        self._session = Session()
+        self._session.cert = cert
+        self.verify = True
 
-    return mapper_dict
+    def download(self, file_id: str, dest_dir: str) -> str:
+        url = self._host + file_id
 
+        response = self._session.get(url)
 
-def map_from_airport_heliport_xml_mapper(airport_heliport_mapper: AirportHeliportXMLMapper) -> db.AirportHeliport:
-    airport_heliport_mapper_dict = airport_heliport_mapper.to_dict()
+        response.raise_for_status()
 
-    airport_heliport_mapper_dict = _handle_position(airport_heliport_mapper_dict)
+        with ZipFile(io.BytesIO(response.content), 'r') as zip_file:
+            zip_file.extractall(dest_dir)
+            filename = zip_file.filelist[0].filename
 
-    return db.AirportHeliport(**airport_heliport_mapper_dict)
-
-
-def map_from_point_xml_mapper(point_mapper: Union[NavaidXMLMapper, DesignatedPointXMLMapper]) -> db.Point:
-    point_mapper_dict = point_mapper.to_dict()
-
-    point_mapper_dict = _handle_position(point_mapper_dict)
-
-    point_types = {
-        NavaidXMLMapper: db.POINT_TYPE.NAVAID,
-        DesignatedPointXMLMapper: db.POINT_TYPE.DESIGNATED_POINT
-    }
-    point_mapper_dict['point_type'] = point_types[point_mapper.__class__]
-
-    return db.Point(**point_mapper_dict)
-
-
-def map_from_route_xml_mapper(route_mapper: RouteXMLMapper) -> db.Route:
-    return db.Route(**route_mapper.to_dict())
-
-
-def map_from_route_segment_xml_mapper(route_segment_mapper: RouteSegmentXMLMapper) -> db.RouteSegment:
-    return db.RouteSegment(**route_segment_mapper.to_dict())
+            return os.path.join(dest_dir, filename)

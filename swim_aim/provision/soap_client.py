@@ -27,50 +27,64 @@ http://opensource.org/licenses/BSD-3-Clause
 
 Details on EUROCONTROL: http://www.eurocontrol.int
 """
-from typing import Dict, Union
+from datetime import datetime
+from typing import Tuple, List
 
-from swim_xml import MappedValueType
-from swim_aim.data_mappers.xml_mappers import AirportHeliportXMLMapper, DesignatedPointXMLMapper, NavaidXMLMapper, \
-    RouteXMLMapper, RouteSegmentXMLMapper
-import swim_aim.db.models as db
-from swim_aim.data_mappers.utils import string_to_coordinates
+from requests import Session
+from zeep import Transport, Client
 
 __author__ = "EUROCONTROL (SWIM)"
 
 
-def _handle_position(mapper_dict: Dict[str, MappedValueType]) -> Dict[str, MappedValueType]:
-    mapper_dict['latitude'], mapper_dict['longitude'] = string_to_coordinates(mapper_dict['position'])
+class AIMSOAPClient:
+    service_name = None
+    port_name = None
 
-    del mapper_dict['position']
+    def __init__(self, client: Client) -> None:
+        self.client = client
 
-    return mapper_dict
+    @classmethod
+    def create(cls, wsdl_path: str, cert: Tuple[str, str]):
+        """
 
+        :param wsdl_path:
+        :param cert:
+        :return:
+        """
+        session = Session()
+        session.cert = cert
+        session.verify = True
+        transport = Transport(session=session)
 
-def map_from_airport_heliport_xml_mapper(airport_heliport_mapper: AirportHeliportXMLMapper) -> db.AirportHeliport:
-    airport_heliport_mapper_dict = airport_heliport_mapper.to_dict()
+        client = Client(wsdl_path, service_name=cls.service_name, port_name=cls.port_name, transport=transport)
 
-    airport_heliport_mapper_dict = _handle_position(airport_heliport_mapper_dict)
-
-    return db.AirportHeliport(**airport_heliport_mapper_dict)
-
-
-def map_from_point_xml_mapper(point_mapper: Union[NavaidXMLMapper, DesignatedPointXMLMapper]) -> db.Point:
-    point_mapper_dict = point_mapper.to_dict()
-
-    point_mapper_dict = _handle_position(point_mapper_dict)
-
-    point_types = {
-        NavaidXMLMapper: db.POINT_TYPE.NAVAID,
-        DesignatedPointXMLMapper: db.POINT_TYPE.DESIGNATED_POINT
-    }
-    point_mapper_dict['point_type'] = point_types[point_mapper.__class__]
-
-    return db.Point(**point_mapper_dict)
+        return cls(client)
 
 
-def map_from_route_xml_mapper(route_mapper: RouteXMLMapper) -> db.Route:
-    return db.Route(**route_mapper.to_dict())
+class AirspaceStructureService(AIMSOAPClient):
+    service_name = 'AirspaceStructureService'
+    port_name = 'AirspaceStructurePort'
 
+    def get_file_ids(self, user_id: str) -> List[str]:
+        """
 
-def map_from_route_segment_xml_mapper(route_segment_mapper: RouteSegmentXMLMapper) -> db.RouteSegment:
-    return db.RouteSegment(**route_segment_mapper.to_dict())
+        :param user_id:
+        :return:
+        """
+        now = datetime.now()
+
+        data = {
+            'endUserId': user_id,  # tstxb2b7
+            'sendTime': now.strftime('%Y-%m-%d %H:%M:%S'),
+            'queryCriteria': {
+                    'date': now.strftime('%Y-%m-%d')
+                }
+            }
+
+        response = self.client.service.queryCompleteAIXMDatasets(**data)
+
+        file_list = response['data']['datasetSummaries'][0]['files']
+
+        result = [file['id'] for file in file_list]
+
+        return result
