@@ -45,3 +45,11 @@ def string_to_coordinates(position: str) -> Tuple[float, float]:
         latitude, longitude = None, None
 
     return latitude, longitude
+
+
+def feet_to_meters(value: float) -> float:
+    """
+    :param value:
+    :return:
+    """
+    return value * 0.3048

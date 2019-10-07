@@ -28,11 +28,12 @@ http://opensource.org/licenses/BSD-3-Clause
 Details on EUROCONTROL: http://www.eurocontrol.int
 """
 from datetime import datetime
+from enum import Enum
 from typing import Union
 
 __author__ = "EUROCONTROL (SWIM)"
 
-MappedValueType = Union[int, str, float, datetime, None]
+MappedValueType = Union[int, str, float, datetime, None, Enum]
 
 NAMESPACES = {
     'adrmsg': 'http://www.eurocontrol.int/cfmu/b2b/ADRMessage',

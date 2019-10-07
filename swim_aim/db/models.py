@@ -37,10 +37,11 @@ __author__ = "EUROCONTROL (SWIM)"
 class BaseModel(db.Model):
     __abstract__ = True
 
+    def _dict(self):
+        return {key: value for key, value in self.__dict__.items() if key not in ['_sa_instance_state']}
+
     def __eq__(self, other) -> bool:
-        return isinstance(other, self.__class__) and \
-               self._sa_instance_state.mapper.all_orm_descriptors.__dict__ == \
-            other._sa_instance_state.mapper.all_orm_descriptors.__dict__
+        return isinstance(other, self.__class__) and self._dict() == other._dict()
 
     def __ne__(self, other) -> bool:
         return not other == self

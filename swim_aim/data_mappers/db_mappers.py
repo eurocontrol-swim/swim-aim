@@ -33,23 +33,29 @@ from swim_xml import MappedValueType
 from swim_aim.data_mappers.xml_mappers import AirportHeliportXMLMapper, DesignatedPointXMLMapper, NavaidXMLMapper, \
     RouteXMLMapper, RouteSegmentXMLMapper
 import swim_aim.db.models as db
-from swim_aim.data_mappers.utils import string_to_coordinates
+from swim_aim.data_mappers.utils import string_to_coordinates, feet_to_meters
 
 __author__ = "EUROCONTROL (SWIM)"
 
 
-def _handle_position(mapper_dict: Dict[str, MappedValueType]) -> Dict[str, MappedValueType]:
+def _handle_position(mapper_dict: Dict[str, MappedValueType]):
     mapper_dict['latitude'], mapper_dict['longitude'] = string_to_coordinates(mapper_dict['position'])
 
     del mapper_dict['position']
 
-    return mapper_dict
+
+def _handle_elevation(mapper_dict: Dict[str, MappedValueType]):
+    if mapper_dict['elevation_uom'] == 'FT':
+        mapper_dict['elevation'] = feet_to_meters(mapper_dict['elevation'])
+        mapper_dict['elevation_uom'] = 'METERS'
 
 
 def map_from_airport_heliport_xml_mapper(airport_heliport_mapper: AirportHeliportXMLMapper) -> db.AirportHeliport:
     airport_heliport_mapper_dict = airport_heliport_mapper.to_dict()
 
-    airport_heliport_mapper_dict = _handle_position(airport_heliport_mapper_dict)
+    _handle_position(airport_heliport_mapper_dict)
+
+    _handle_elevation(airport_heliport_mapper_dict)
 
     return db.AirportHeliport(**airport_heliport_mapper_dict)
 
@@ -57,7 +63,7 @@ def map_from_airport_heliport_xml_mapper(airport_heliport_mapper: AirportHelipor
 def map_from_point_xml_mapper(point_mapper: Union[NavaidXMLMapper, DesignatedPointXMLMapper]) -> db.Point:
     point_mapper_dict = point_mapper.to_dict()
 
-    point_mapper_dict = _handle_position(point_mapper_dict)
+    _handle_position(point_mapper_dict)
 
     point_types = {
         NavaidXMLMapper: db.POINT_TYPE.NAVAID,

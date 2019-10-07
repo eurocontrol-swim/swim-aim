@@ -69,14 +69,16 @@ __author__ = "EUROCONTROL (SWIM)"
             longitude=160.67833333333334,
             srs_name='urn:ogc:def:crs:EPSG::4326',
             elevation=0.0,
-            elevation_uom='FT',
+            elevation_uom='METERS',
             begin_lifetime=datetime.datetime(2013, 11, 14, 0, 0),
             end_lifetime=None
         )
     )
 ])
 def test_convert_airport_heliport_mapper_to_airport_heliport_model(mapper, expected_db_model):
-    assert expected_db_model == map_from_airport_heliport_xml_mapper(mapper)
+    db_model = map_from_airport_heliport_xml_mapper(mapper)
+
+    assert expected_db_model == db_model
 
 
 @pytest.mark.parametrize('mapper, expected_db_model', [
