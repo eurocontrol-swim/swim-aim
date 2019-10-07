@@ -27,33 +27,34 @@ http://opensource.org/licenses/BSD-3-Clause
 
 Details on EUROCONTROL: http://www.eurocontrol.int
 """
-import io
-import os
 from typing import Tuple
-from zipfile import ZipFile
 
 from requests import Session
+from zeep import Client, Transport
 
 __author__ = "EUROCONTROL (SWIM)"
 
 
-class AIMFileDownloadClient:
+class NetworkManagerSOAPService:
+    service_name = None
+    port_name = None
 
-    def __init__(self, cert: Tuple[str, str]) -> None:
-        self._host = 'https://www.b2b.preops.nm.eurocontrol.int:443/FILE_PREOPS/gateway/spec/'
-        self._session = Session()
-        self._session.cert = cert
-        self.verify = True
+    def __init__(self, client: Client) -> None:
+        self.client = client
 
-    def download(self, file_id: str, dest_dir: str) -> str:
-        url = self._host + file_id
+    @classmethod
+    def create(cls, wsdl_path: str, cert: Tuple[str, str]):
+        """
 
-        response = self._session.get(url)
+        :param wsdl_path:
+        :param cert:
+        :return:
+        """
+        session = Session()
+        session.cert = cert
+        session.verify = True
+        transport = Transport(session=session)
 
-        response.raise_for_status()
+        client = Client(wsdl_path, service_name=cls.service_name, port_name=cls.port_name, transport=transport)
 
-        with ZipFile(io.BytesIO(response.content), 'r') as zip_file:
-            zip_file.extractall(dest_dir)
-            filename = zip_file.filelist[0].filename
-
-            return os.path.join(dest_dir, filename)
+        return cls(client)
