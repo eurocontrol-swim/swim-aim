@@ -37,7 +37,7 @@ from swim_aim.db.airport_heliports import create_airport_heliport
 from swim_aim.db.points import create_point
 from swim_aim.network_manager.services.airspace_structure import AirspaceStructureService
 from swim_aim.network_manager.services.file_download import NetworkManagerFileDownloadClient
-from swim_xml.mapper import xml_map
+from swim_aim.xml import xml_map
 
 __author__ = "EUROCONTROL (SWIM)"
 

@@ -32,7 +32,7 @@ import os
 
 import pytest
 
-from swim_xml.mapper import xml_map
+from swim_aim.xml.mapper import xml_map
 from swim_aim.data_mappers.xml_mappers import AirportHeliportXMLMapper, DesignatedPointXMLMapper, NavaidXMLMapper, \
     RouteSegmentXMLMapper, remove_urn_uuid, RouteXMLMapper
 from tests import TEST_DIR

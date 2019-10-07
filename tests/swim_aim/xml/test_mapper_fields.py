@@ -33,8 +33,8 @@ from unittest import mock
 import pytest
 from lxml import etree
 
-from swim_xml import NAMESPACES
-from swim_xml.mapper_fields import XMLMapperField, DatetimeXMLMapperField, FloatXMLMapperField, \
+from swim_aim.xml import NAMESPACES
+from swim_aim.xml.mapper_fields import XMLMapperField, DatetimeXMLMapperField, FloatXMLMapperField, \
     IntegerXMLMapperField
 
 __author__ = "EUROCONTROL (SWIM)"
@@ -89,7 +89,7 @@ def test_datetime_mapper_field__mapped_value_is_none__returns_none(mock_mapper_f
 @pytest.mark.parametrize('xml_string, xpath, mapper_field_class, expected_mapped_value', [
     (
         # string from element
-        """<?swim_xml version='1.0' encoding='UTF-8'?><adrmsg:ADRMessage xmlns:adrmsg="http://www.eurocontrol.int/cfmu/b2b/ADRMessage" xmlns:gml="http://www.opengis.net/gml/3.2" gml:id="ID_5052_1548813652630_1">
+        """<?xml version='1.0' encoding='UTF-8'?><adrmsg:ADRMessage xmlns:adrmsg="http://www.eurocontrol.int/cfmu/b2b/ADRMessage" xmlns:gml="http://www.opengis.net/gml/3.2" gml:id="ID_5052_1548813652630_1">
             <adrmsg:hasMember>
             <aixm:AirportHeliport xmlns:aixm="http://www.aixm.aero/schema/5.1" gml:id="ID_5052_1548813652630_2">
                 <gml:identifier codeSpace="urn:uuid:">2193b095-8bd7-40e4-ba10-2a5a3cf29901</gml:identifier>
@@ -103,7 +103,7 @@ def test_datetime_mapper_field__mapped_value_is_none__returns_none(mock_mapper_f
     ),
     (
         # datetime from element
-        """<?swim_xml version='1.0' encoding='UTF-8'?><adrmsg:ADRMessage xmlns:adrmsg="http://www.eurocontrol.int/cfmu/b2b/ADRMessage" xmlns:gml="http://www.opengis.net/gml/3.2" gml:id="ID_5052_1548813652630_1">
+        """<?xml version='1.0' encoding='UTF-8'?><adrmsg:ADRMessage xmlns:adrmsg="http://www.eurocontrol.int/cfmu/b2b/ADRMessage" xmlns:gml="http://www.opengis.net/gml/3.2" gml:id="ID_5052_1548813652630_1">
             <adrmsg:hasMember>
             <aixm:AirportHeliport xmlns:aixm="http://www.aixm.aero/schema/5.1" gml:id="ID_5052_1548813652630_2">
             <aixm:timeSlice>
@@ -126,7 +126,7 @@ def test_datetime_mapper_field__mapped_value_is_none__returns_none(mock_mapper_f
     ),
     (
         # float from element
-        """<?swim_xml version='1.0' encoding='UTF-8'?><adrmsg:ADRMessage xmlns:adrmsg="http://www.eurocontrol.int/cfmu/b2b/ADRMessage" xmlns:gml="http://www.opengis.net/gml/3.2" gml:id="ID_5052_1548813652630_1">
+        """<?xml version='1.0' encoding='UTF-8'?><adrmsg:ADRMessage xmlns:adrmsg="http://www.eurocontrol.int/cfmu/b2b/ADRMessage" xmlns:gml="http://www.opengis.net/gml/3.2" gml:id="ID_5052_1548813652630_1">
             <adrmsg:hasMember>
             <aixm:AirportHeliport xmlns:aixm="http://www.aixm.aero/schema/5.1" gml:id="ID_5052_1548813652630_2">
             <aixm:timeSlice>
@@ -149,7 +149,7 @@ def test_datetime_mapper_field__mapped_value_is_none__returns_none(mock_mapper_f
     ),
     (
         # integer from element
-        """<?swim_xml version='1.0' encoding='UTF-8'?><adrmsg:ADRMessage xmlns:adrmsg="http://www.eurocontrol.int/cfmu/b2b/ADRMessage" xmlns:gml="http://www.opengis.net/gml/3.2" gml:id="ID_5052_1548813652630_1">
+        """<?xml version='1.0' encoding='UTF-8'?><adrmsg:ADRMessage xmlns:adrmsg="http://www.eurocontrol.int/cfmu/b2b/ADRMessage" xmlns:gml="http://www.opengis.net/gml/3.2" gml:id="ID_5052_1548813652630_1">
             <adrmsg:hasMember>
             <aixm:AirportHeliport xmlns:aixm="http://www.aixm.aero/schema/5.1" gml:id="ID_5052_1548813652630_2">
             <aixm:timeSlice>
@@ -172,7 +172,7 @@ def test_datetime_mapper_field__mapped_value_is_none__returns_none(mock_mapper_f
     ),
     (
         # string from attribute
-        """<?swim_xml version='1.0' encoding='UTF-8'?><adrmsg:ADRMessage xmlns:adrmsg="http://www.eurocontrol.int/cfmu/b2b/ADRMessage" xmlns:gml="http://www.opengis.net/gml/3.2" gml:id="ID_5052_1548813652630_1">
+        """<?xml version='1.0' encoding='UTF-8'?><adrmsg:ADRMessage xmlns:adrmsg="http://www.eurocontrol.int/cfmu/b2b/ADRMessage" xmlns:gml="http://www.opengis.net/gml/3.2" gml:id="ID_5052_1548813652630_1">
             <adrmsg:hasMember>
             <aixm:AirportHeliport xmlns:aixm="http://www.aixm.aero/schema/5.1" gml:id="ID_5052_1548813652630_2">
             <aixm:timeSlice>
@@ -206,7 +206,7 @@ def test_mapper_field__from_xml_returns_the_correct_value(xml_string, xpath, map
 @pytest.mark.parametrize('xml_string, xpath, mapper_field_class, expected_mapped_value', [
     (
         # string from attribute with namespace
-        """<?swim_xml version='1.0' encoding='UTF-8'?><adrmsg:ADRMessage xmlns:adrmsg="http://www.eurocontrol.int/cfmu/b2b/ADRMessage" xmlns:gml="http://www.opengis.net/gml/3.2" gml:id="ID_5052_1548813652630_1">
+        """<?xml version='1.0' encoding='UTF-8'?><adrmsg:ADRMessage xmlns:adrmsg="http://www.eurocontrol.int/cfmu/b2b/ADRMessage" xmlns:gml="http://www.opengis.net/gml/3.2" gml:id="ID_5052_1548813652630_1">
                 <adrmsg:hasMember>
                 <aixm:RouteSegment xmlns:aixm="http://www.aixm.aero/schema/5.1" gml:id="ID_5063_1548813656537_2">
                     <gml:identifier codeSpace="urn:uuid:">5f7c0b50-b667-470e-953f-8ae479a5df3e</gml:identifier>
@@ -240,7 +240,7 @@ def test_mapper_field__maps_attribute_with_namespace(xml_string, xpath, mapper_f
 @pytest.mark.parametrize('xml_string, xpath, mapper_field_class, expected_mapped_value', [
     (
         # string from attribute with namespace
-        """<?swim_xml version='1.0' encoding='UTF-8'?><adrmsg:ADRMessage xmlns:adrmsg="http://www.eurocontrol.int/cfmu/b2b/ADRMessage" xmlns:gml="http://www.opengis.net/gml/3.2" gml:id="ID_5052_1548813652630_1">
+        """<?xml version='1.0' encoding='UTF-8'?><adrmsg:ADRMessage xmlns:adrmsg="http://www.eurocontrol.int/cfmu/b2b/ADRMessage" xmlns:gml="http://www.opengis.net/gml/3.2" gml:id="ID_5052_1548813652630_1">
                 <adrmsg:hasMember>
                 <aixm:RouteSegment xmlns:aixm="http://www.aixm.aero/schema/5.1" gml:id="ID_5063_1548813656537_2">
                     <gml:identifier codeSpace="urn:uuid:">5f7c0b50-b667-470e-953f-8ae479a5df3e</gml:identifier>

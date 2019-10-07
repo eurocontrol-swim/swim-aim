@@ -32,8 +32,8 @@ from unittest import mock
 
 import pytest
 
-from swim_xml.mapper import XMLMapper, xml_map
-from swim_xml.mapper_fields import XMLMapperField
+from swim_aim.xml.mapper import XMLMapper, xml_map
+from swim_aim.xml.mapper_fields import XMLMapperField
 from swim_aim.data_mappers.xml_mappers import AirportHeliportXMLMapper
 from tests import TEST_DIR
 

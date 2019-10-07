@@ -29,7 +29,7 @@ Details on EUROCONTROL: http://www.eurocontrol.int
 """
 from typing import Dict, Union
 
-from swim_xml import MappedValueType
+from swim_aim.xml import MappedValueType
 from swim_aim.data_mappers.xml_mappers import AirportHeliportXMLMapper, DesignatedPointXMLMapper, NavaidXMLMapper, \
     RouteXMLMapper, RouteSegmentXMLMapper
 import swim_aim.db.models as db

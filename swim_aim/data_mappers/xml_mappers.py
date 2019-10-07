@@ -27,8 +27,9 @@ http://opensource.org/licenses/BSD-3-Clause
 
 Details on EUROCONTROL: http://www.eurocontrol.int
 """
-from swim_xml.mapper import XMLMapper
-from swim_xml.mapper_fields import XMLMapperField, FloatXMLMapperField, DatetimeXMLMapperField, IntegerXMLMapperField
+from swim_aim.xml.mapper import XMLMapper
+from swim_aim.xml.mapper_fields import XMLMapperField, FloatXMLMapperField, DatetimeXMLMapperField, \
+    IntegerXMLMapperField
 
 __author__ = "EUROCONTROL (SWIM)"
 
