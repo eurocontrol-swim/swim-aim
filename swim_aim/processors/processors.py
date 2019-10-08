@@ -27,36 +27,36 @@ http://opensource.org/licenses/BSD-3-Clause
 
 Details on EUROCONTROL: http://www.eurocontrol.int
 """
-import io
-import os
-from typing import Tuple
-from zipfile import ZipFile
-
-from requests import Session
+from swim_aim.processors import DataProcessor, DataProcessorContext
+from swim_aim.xml.mapper import xml_map
 
 __author__ = "EUROCONTROL (SWIM)"
 
 
-class NetworkManagerFileDownloadClient:
+class XMLMapProcessor(DataProcessor):
 
-    def __init__(self, cert: Tuple[str, str]) -> None:
-        self._host = 'https://www.b2b.preops.nm.eurocontrol.int:443/FILE_PREOPS/gateway/spec/'
-        self._session = Session()
-        self._session.cert = cert
-        self.verify = True
+    def process(self, context: DataProcessorContext) -> None:
+        print(f"Mapping XML file: {context.file}")
+        xml_mappers = xml_map(file_path=context.file,
+                              mapper_class=context.xml_mapper_class)
 
-    def download(self, file_id: str, dest_dir: str) -> str:
-        url = self._host + file_id
+        context.xml_mappers = xml_mappers
 
-        response = self._session.get(url)
 
-        response.raise_for_status()
+class DbMapProcessor(DataProcessor):
 
-        with ZipFile(io.BytesIO(response.content), 'r') as zip_file:
-            zip_file.extractall(dest_dir)
-            filename = zip_file.filelist[0].filename
+    def process(self, context: DataProcessorContext) -> None:
+        db_objects = []
+        for xml_mapper in context.xml_mappers:
+            print(f"Mapping XML to DB object: {xml_mapper.__class__}")
+            db_objects.append(context.db_mapper(xml_mapper))
 
-            dest_file = os.path.join(dest_dir, filename)
-            print(f"Downloaded {dest_file}")
+        context.db_objects = db_objects
 
-            return dest_file
+
+class DbSaveProcessor(DataProcessor):
+
+    def process(self, context: DataProcessorContext) -> None:
+        for db_object in context.db_objects:
+            print(f"Saving db object: {db_object}")
+            context.db_saver(db_object)

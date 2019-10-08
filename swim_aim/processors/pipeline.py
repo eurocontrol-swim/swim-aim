@@ -27,36 +27,25 @@ http://opensource.org/licenses/BSD-3-Clause
 
 Details on EUROCONTROL: http://www.eurocontrol.int
 """
-import io
-import os
-from typing import Tuple
-from zipfile import ZipFile
+from typing import List
 
-from requests import Session
+from swim_aim.processors import DataProcessor, DataProcessorContext
+from swim_aim.processors.processors import XMLMapProcessor, DbMapProcessor, DbSaveProcessor
 
 __author__ = "EUROCONTROL (SWIM)"
 
 
-class NetworkManagerFileDownloadClient:
+class Pipeline:
 
-    def __init__(self, cert: Tuple[str, str]) -> None:
-        self._host = 'https://www.b2b.preops.nm.eurocontrol.int:443/FILE_PREOPS/gateway/spec/'
-        self._session = Session()
-        self._session.cert = cert
-        self.verify = True
+    def __init__(self, processors: List[DataProcessor]) -> None:
+        self.processors = processors
 
-    def download(self, file_id: str, dest_dir: str) -> str:
-        url = self._host + file_id
+    def process(self, context: DataProcessorContext):
+        for processor in self.processors:
+            processor.process(context)
 
-        response = self._session.get(url)
 
-        response.raise_for_status()
-
-        with ZipFile(io.BytesIO(response.content), 'r') as zip_file:
-            zip_file.extractall(dest_dir)
-            filename = zip_file.filelist[0].filename
-
-            dest_file = os.path.join(dest_dir, filename)
-            print(f"Downloaded {dest_file}")
-
-            return dest_file
+def get_aim_pipeline():
+    return Pipeline(
+        processors=[XMLMapProcessor(), DbMapProcessor(), DbSaveProcessor()]
+    )

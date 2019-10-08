@@ -27,36 +27,27 @@ http://opensource.org/licenses/BSD-3-Clause
 
 Details on EUROCONTROL: http://www.eurocontrol.int
 """
-import io
-import os
-from typing import Tuple
-from zipfile import ZipFile
-
-from requests import Session
+from abc import ABC, abstractmethod
 
 __author__ = "EUROCONTROL (SWIM)"
 
 
-class NetworkManagerFileDownloadClient:
+class DataProcessor(ABC):
 
-    def __init__(self, cert: Tuple[str, str]) -> None:
-        self._host = 'https://www.b2b.preops.nm.eurocontrol.int:443/FILE_PREOPS/gateway/spec/'
-        self._session = Session()
-        self._session.cert = cert
-        self.verify = True
+    @abstractmethod
+    def process(self, context):
+        return context
 
-    def download(self, file_id: str, dest_dir: str) -> str:
-        url = self._host + file_id
 
-        response = self._session.get(url)
+class DataProcessorContext:
 
-        response.raise_for_status()
+    def __init__(self, xml_mapper_class, db_mapper, db_saver):
+        # metadata
+        self.xml_mapper_class = xml_mapper_class
+        self.db_mapper = db_mapper
+        self.db_saver = db_saver
 
-        with ZipFile(io.BytesIO(response.content), 'r') as zip_file:
-            zip_file.extractall(dest_dir)
-            filename = zip_file.filelist[0].filename
-
-            dest_file = os.path.join(dest_dir, filename)
-            print(f"Downloaded {dest_file}")
-
-            return dest_file
+        # data
+        self.file = None
+        self.xml_mappers = None
+        self.db_objects = None
